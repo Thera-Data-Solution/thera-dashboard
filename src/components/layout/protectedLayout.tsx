@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Spin, message } from 'antd';
+import { Button, Result, Spin, message } from 'antd';
 import useAuthStore from '../../store/authStore';
 import { notification } from 'antd';
+import DashboardLayout from './default';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
+  const navigate = useNavigate();
   const { token, user, fetchUser, logout } = useAuthStore();
   const [loading, setLoading] = useState(true);
 
@@ -40,9 +41,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     };
   }, [token, fetchUser, logout, navigate]);
 
-  // Bagian ini dijalankan setelah proses di useEffect selesai
-
-  // --- Pengecekan Akses ---
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -51,29 +49,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  // 3. Periksa Peran Pengguna (Implementasi baru)
   const isAllowed = user && (user.role === 'ADMIN' || user.role === 'SU');
   if (!user || !isAllowed) {
-    api.open({
-      message: 'Akses ditolak',
-      description: 'Hanya pengguna dengan peran ADMIN yang diizinkan.',
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-    });
-    // Anda bisa mengarahkan ke halaman 403 (Forbidden) atau halaman utama
-    navigate('/', { replace: true });
+      navigate('/403', { replace: true });
 
     // Kembalikan null atau elemen kosong sementara pengalihan terjadi
-    return null;
+    return null
   }
 
-  // 4. Izinkan Akses
   return (
-    <>
-      {contextHolder}
+    <DashboardLayout>
       {children}
-    </>
+    </DashboardLayout>
   );
 };
 
