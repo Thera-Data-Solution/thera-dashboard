@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Result, Spin, message } from 'antd';
-import useAuthStore from '../../store/authStore';
-import { notification } from 'antd';
-import DashboardLayout from './default';
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import Layout from '../components/layout/default';
+import useAuthStore from '@/store/authStore';
+import { toast } from "sonner"
+import { Spinner } from '../components/ui/spinner';
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const [api, contextHolder] = notification.useNotification();
+
+const ProtectedRoute = () => {
   const navigate = useNavigate();
   const { token, user, fetchUser, logout } = useAuthStore();
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       try {
         await fetchUser();
       } catch (err) {
-        message.error('Sesi Anda telah berakhir. Silakan login kembali.');
+        toast.error('Sesi Anda telah berakhir. Silakan login kembali.');
         logout();
         navigate('/login', { replace: true });
       } finally {
@@ -44,23 +44,23 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spin size="large" tip="Memuat data pengguna..." />
+        <Spinner />
       </div>
     );
   }
 
   const isAllowed = user && (user.role === 'ADMIN' || user.role === 'SU');
   if (!user || !isAllowed) {
-      navigate('/403', { replace: true });
+    navigate('/403', { replace: true });
 
     // Kembalikan null atau elemen kosong sementara pengalihan terjadi
     return null
   }
 
   return (
-    <DashboardLayout>
-      {children}
-    </DashboardLayout>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 };
 

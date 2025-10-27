@@ -1,124 +1,80 @@
-// src/pages/Register.tsx
-import React, { useState } from 'react';
-import { Button, Form, Input, Card, message } from 'antd';
-import { UserOutlined, LockOutlined, SmileOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
-import { registerApi } from '../services/auth';
-import { AxiosError } from 'axios';
-import { notification } from 'antd';
+import { registerApi } from "@/api/auth";
+import { SignupForm } from "@/components/form/register-form";
+import useAuthStore from "@/store/authStore";
+import { AxiosError } from "axios";
+import { GalleryVerticalEnd } from "lucide-react"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-const Register: React.FC = () => {
-    const [api, contextHolder] = notification.useNotification();
-    const navigate = useNavigate();
-    // Ambil action 'login' dari Zustand store
+export default function SignupPage() {
     const login = useAuthStore((state) => state.login);
     const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const onFinish = async (values: any) => {
+    const onFinish = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setLoading(true);
         try {
-            // Panggil API Register dengan Axios
+            const formData = new FormData(e.currentTarget);
+            const fullName = formData.get('fullName') as string;
+            const email = formData.get('email') as string;
+            const password = formData.get('password') as string;
+            const confirmPassword = formData.get('confirmPassword') as string;
+            if (password !== confirmPassword) {
+                toast.error('Password dan konfirmasi password tidak sesuai.');
+                setLoading(false);
+                return;
+            }
+
             const { token } = await registerApi({
-                email: values.email,
-                password: values.password,
-                fullName: values.fullName
+                fullName,
+                email,
+                password
             });
 
-            // Simpan token ke Zustand store
             login(token);
 
-            api.open({
-                message: 'Success',
-                description: "Registrasi Berhasil",
-                icon: <SmileOutlined style={{ color: 'green' }} />,
-            });
-            navigate('/dashboard', { replace: true });
+            toast.success('Registrasi berhasil! Selamat datang di dashboard.');
+            navigate('/app', { replace: true });
 
         } catch (error) {
             if (error instanceof AxiosError) {
                 const data = error.response?.data as { error?: string; message?: string };
                 const errorMessage =
                     data?.error || data?.message || 'Register gagal. Periksa kredensial Anda.';
-                api.open({
-                    message: 'Error',
-                    description: errorMessage,
-                    icon: <SmileOutlined style={{ color: 'red' }} />,
-                });
+                toast.error(errorMessage);
             } else {
-                message.error('Terjadi kesalahan tak terduga.');
+                toast.error('Terjadi kesalahan tak terduga.');
             }
         } finally {
             setLoading(false);
         }
     };
-
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            {contextHolder}
-            <Card title="Register Akun Baru" className="w-full max-w-md shadow-lg">
-                <Form
-                    name="register"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                    layout="vertical"
-                >
-                    <Form.Item
-                        label="Display Name"
-                        name="fullName"
-                        rules={[{ required: true, message: 'Mohon masukkan fullname!' }]}
-                    >
-                        <Input prefix={<UserOutlined />} placeholder="Fullname" />
-                    </Form.Item>
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={[{ required: true, message: 'Mohon masukkan email!' }]}
-                    >
-                        <Input prefix={<UserOutlined />} placeholder="Email" />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[{ required: true, message: 'Mohon masukkan password!' }]}
-                    >
-                        <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Konfirmasi Password"
-                        name="confirm"
-                        dependencies={['password']}
-                        hasFeedback
-                        rules={[
-                            { required: true, message: 'Mohon konfirmasi password Anda!' },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject(new Error('Konfirmasi password tidak cocok!'));
-                                },
-                            }),
-                        ]}
-                    >
-                        <Input.Password prefix={<LockOutlined />} placeholder="Konfirmasi Password" />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="w-full" loading={loading}>
-                            Register
-                        </Button>
-                    </Form.Item>
-                </Form>
-                <div className="text-center">
-                    Sudah punya akun? <Link to="/login" className="text-blue-500 hover:text-blue-700">Login di sini</Link>
+        <div className="grid min-h-svh lg:grid-cols-2">
+            <div className="flex flex-col gap-4 p-6 md:p-10">
+                <div className="flex justify-center gap-2 md:justify-start">
+                    <a href="#" className="flex items-center gap-2 font-medium">
+                        <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+                            <GalleryVerticalEnd className="size-4" />
+                        </div>
+                        Acme Inc.
+                    </a>
                 </div>
-            </Card>
+                <div className="flex flex-1 items-center justify-center">
+                    <div className="w-full max-w-xs">
+                        <SignupForm onSubmit={onFinish} loading={loading} />
+                    </div>
+                </div>
+            </div>
+            <div className="bg-muted relative hidden lg:block">
+                <img
+                    src="/placeholder.svg"
+                    alt="Image"
+                    className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                />
+            </div>
         </div>
-    );
-};
-
-export default Register;
+    )
+}

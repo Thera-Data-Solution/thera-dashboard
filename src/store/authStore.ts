@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { fetchMeApi, User } from "../services/auth";
 import axios from "axios";
+import { fetchMeApi, type User } from "@/api/auth.js";
 
 interface AuthState {
   token: string | null;
