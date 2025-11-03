@@ -3,10 +3,7 @@
 import * as React from "react"
 import {
   Command,
-  Frame,
   LifeBuoy,
-  Map,
-  PieChart,
   Send,
 } from "lucide-react"
 

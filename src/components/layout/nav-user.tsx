@@ -5,8 +5,7 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
-  LogOut,
-  Sparkles,
+  LogOut
 } from "lucide-react"
 
 import {
@@ -25,11 +24,23 @@ import {
   useSidebar,
 } from "../ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import useAuthStore from "@/store/authStore"
+import { Navigate } from "@tanstack/react-router"
+import { Route } from "@/routes/app.route"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
-  const { user, logout } = useAuthStore()
+  const { user, logout } = Route.useRouteContext().authStore.getState();
+
+  const loggingOut = () => {
+    logout()
+    Navigate({
+      to: '/',
+      replace: true
+    })
+    window.location.href = '/'
+    window.location.reload()
+  }
+
 
   return (
     <SidebarMenu>
@@ -85,7 +96,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout}>
+            <DropdownMenuItem onClick={loggingOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

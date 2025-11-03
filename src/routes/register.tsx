@@ -1,13 +1,17 @@
 import { registerApi } from "@/api/auth";
 import { SignupForm } from "@/components/form/register-form";
 import useAuthStore from "@/store/authStore";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 import { GalleryVerticalEnd } from "lucide-react"
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-export default function SignupPage() {
+export const Route = createFileRoute('/register')({
+  component: SignupPage,
+})
+
+function SignupPage() {
     const login = useAuthStore((state) => state.login);
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -36,7 +40,10 @@ export default function SignupPage() {
             login(token);
 
             toast.success('Registrasi berhasil! Selamat datang di dashboard.');
-            navigate('/app', { replace: true });
+            navigate({
+                to: '/app',
+                replace: true
+            });
 
         } catch (error) {
             if (error instanceof AxiosError) {

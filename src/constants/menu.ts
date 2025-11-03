@@ -10,6 +10,10 @@ export const DEFAULT_MENU = [
             {
                 title: "Overview",
                 url: "/app/dashboard/overview",
+            },
+             {
+                title: "User",
+                url: "/app/dashboard/user",
             }
         ],
     },
