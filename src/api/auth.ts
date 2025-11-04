@@ -1,3 +1,4 @@
+import axios from "axios";
 import { authApi } from ".";
 
 interface LoginPayload {
@@ -54,6 +55,9 @@ export const fetchMeApi = async (token: string): Promise<User> => {
       token,
     },
   });
+
+  authApi.defaults.headers.common["token"] = token;
+  axios.defaults.headers.common["token"] = token;
 
   return response.data;
 };
