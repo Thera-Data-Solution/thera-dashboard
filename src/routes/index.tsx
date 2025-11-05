@@ -1,10 +1,14 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { LoginForm } from "@/components/form/login-form";
 import { loginApi } from "@/api/auth";
 import useAuthStore from "@/store/authStore";
 import { AxiosError } from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
+export const Route = createFileRoute('/')({
+  component: LoginPage,
+})
 
 export default function LoginPage() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -27,7 +31,10 @@ export default function LoginPage() {
             login(token);
 
             toast.success("Berhasil")
-            navigate('/app', { replace: true });
+            navigate({
+                to: '/app',
+                replace: true
+            })
 
         } catch (error) {
             if (error instanceof AxiosError) {
