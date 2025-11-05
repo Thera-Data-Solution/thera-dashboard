@@ -37,6 +37,9 @@ jobs:
           context: .
           push: true
           tags: ${{ env.GHCR_IMAGE }}
+          build-args: |
+            VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}
+
 
   deploy:
     runs-on: ubuntu-latest
