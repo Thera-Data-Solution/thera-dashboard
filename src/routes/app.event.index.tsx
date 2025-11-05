@@ -1,9 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/event/')({
-  component: RouteComponent,
+  beforeLoad: () => {
+    throw redirect({ to: '/app/event/categories' })
+  }
 })
-
-function RouteComponent() {
-  return <div>Hello "/app/event/"!</div>
-}

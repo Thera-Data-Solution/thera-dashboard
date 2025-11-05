@@ -1,4 +1,6 @@
-import { CrudManager } from '@/components/crud/crudManager'
+import { getCategories } from '@/api/categories';
+import CategoryClient from '@/screen/event/category'
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/event/categories/')({
@@ -6,20 +8,13 @@ export const Route = createFileRoute('/app/event/categories/')({
 })
 
 function RouteComponent() {
-  return <CrudManager
-      title="Categories"
-      endpoint={import.meta.env.VITE_BACKEND_URL + "/categories"}
-      hasPagination={false}
-      useFormData
-      fields={[
-        { name: "image", label: "Image", type: "file" },
-        { name: "name", label: "Name", type: "text", required: true },
-        { name: "slug", label: "Slug", type: "text", required: true },
-        { name: "description", label: "Description", type: "textarea" },
-        { name: "price", label: "Price", type: "number" },
-        { name: "location", label: "Location", type: "text" },
-        { name: "isFree", label: "Is Free", type: "checkbox" },
-        { name: "disable", label: "Disable", type: "checkbox" },
-      ]}
-    />
+  const { data, isLoading } = useQuery({ queryKey: ["categories"], queryFn: getCategories });
+  if(isLoading) return <div>Loading...</div>
+  if(!data) return <div>No data</div>
+  return (
+    <div>
+      <div className='font-bold text-xl'>Event Categories</div>
+      <CategoryClient categories={data || []} />
+    </div>
+)
 }

@@ -18,6 +18,8 @@ import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.in
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
 import { Route as AppEventCategoriesIndexRouteImport } from './routes/app.event.categories.index'
+import { Route as AppEventCategoriesNewRouteImport } from './routes/app.event.categories.new'
+import { Route as AppEventCategoriesUpdateCatIdRouteImport } from './routes/app.event.categories.update.$catId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -64,6 +66,17 @@ const AppEventCategoriesIndexRoute = AppEventCategoriesIndexRouteImport.update({
   path: '/event/categories/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppEventCategoriesNewRoute = AppEventCategoriesNewRouteImport.update({
+  id: '/event/categories/new',
+  path: '/event/categories/new',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppEventCategoriesUpdateCatIdRoute =
+  AppEventCategoriesUpdateCatIdRouteImport.update({
+    id: '/event/categories/update/$catId',
+    path: '/event/categories/update/$catId',
+    getParentRoute: () => AppRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,7 +87,9 @@ export interface FileRoutesByFullPath {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
+  '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,7 +99,9 @@ export interface FileRoutesByTo {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
+  '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,7 +113,9 @@ export interface FileRoutesById {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
+  '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/event/categories/': typeof AppEventCategoriesIndexRoute
+  '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,7 +128,9 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/event/categories/new'
     | '/app/event/categories'
+    | '/app/event/categories/update/$catId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,7 +140,9 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/event/categories/new'
     | '/app/event/categories'
+    | '/app/event/categories/update/$catId'
   id:
     | '__root__'
     | '/'
@@ -130,7 +153,9 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard/'
     | '/app/event/'
+    | '/app/event/categories/new'
     | '/app/event/categories/'
+    | '/app/event/categories/update/$catId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -204,6 +229,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventCategoriesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/event/categories/new': {
+      id: '/app/event/categories/new'
+      path: '/event/categories/new'
+      fullPath: '/app/event/categories/new'
+      preLoaderRoute: typeof AppEventCategoriesNewRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/event/categories/update/$catId': {
+      id: '/app/event/categories/update/$catId'
+      path: '/event/categories/update/$catId'
+      fullPath: '/app/event/categories/update/$catId'
+      preLoaderRoute: typeof AppEventCategoriesUpdateCatIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
@@ -213,7 +252,9 @@ interface AppRouteRouteChildren {
   AppDashboardUserRoute: typeof AppDashboardUserRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppEventIndexRoute: typeof AppEventIndexRoute
+  AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
   AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
+  AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -222,7 +263,9 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardUserRoute: AppDashboardUserRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppEventIndexRoute: AppEventIndexRoute,
+  AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
+  AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
