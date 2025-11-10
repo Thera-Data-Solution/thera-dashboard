@@ -17,9 +17,14 @@ import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
+import { Route as AppEventSchedulesIndexRouteImport } from './routes/app.event.schedules.index'
 import { Route as AppEventCategoriesIndexRouteImport } from './routes/app.event.categories.index'
+import { Route as AppEventBookingIndexRouteImport } from './routes/app.event.booking.index'
+import { Route as AppContentArticlesIndexRouteImport } from './routes/app.content.articles.index'
 import { Route as AppEventCategoriesNewRouteImport } from './routes/app.event.categories.new'
+import { Route as AppContentArticleNewRouteImport } from './routes/app.content.article.new'
 import { Route as AppEventCategoriesUpdateCatIdRouteImport } from './routes/app.event.categories.update.$catId'
+import { Route as AppContentArticleUpdateArIdRouteImport } from './routes/app.content.article.update.$arId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -61,9 +66,24 @@ const AppDashboardOverviewRoute = AppDashboardOverviewRouteImport.update({
   path: '/dashboard/overview',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppEventSchedulesIndexRoute = AppEventSchedulesIndexRouteImport.update({
+  id: '/event/schedules/',
+  path: '/event/schedules/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppEventCategoriesIndexRoute = AppEventCategoriesIndexRouteImport.update({
   id: '/event/categories/',
   path: '/event/categories/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppEventBookingIndexRoute = AppEventBookingIndexRouteImport.update({
+  id: '/event/booking/',
+  path: '/event/booking/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppContentArticlesIndexRoute = AppContentArticlesIndexRouteImport.update({
+  id: '/content/articles/',
+  path: '/content/articles/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppEventCategoriesNewRoute = AppEventCategoriesNewRouteImport.update({
@@ -71,10 +91,21 @@ const AppEventCategoriesNewRoute = AppEventCategoriesNewRouteImport.update({
   path: '/event/categories/new',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppContentArticleNewRoute = AppContentArticleNewRouteImport.update({
+  id: '/content/article/new',
+  path: '/content/article/new',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppEventCategoriesUpdateCatIdRoute =
   AppEventCategoriesUpdateCatIdRouteImport.update({
     id: '/event/categories/update/$catId',
     path: '/event/categories/update/$catId',
+    getParentRoute: () => AppRouteRoute,
+  } as any)
+const AppContentArticleUpdateArIdRoute =
+  AppContentArticleUpdateArIdRouteImport.update({
+    id: '/content/article/update/$arId',
+    path: '/content/article/update/$arId',
     getParentRoute: () => AppRouteRoute,
   } as any)
 
@@ -87,8 +118,13 @@ export interface FileRoutesByFullPath {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/articles': typeof AppContentArticlesIndexRoute
+  '/app/event/booking': typeof AppEventBookingIndexRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
+  '/app/event/schedules': typeof AppEventSchedulesIndexRoute
+  '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRoutesByTo {
@@ -99,8 +135,13 @@ export interface FileRoutesByTo {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/articles': typeof AppContentArticlesIndexRoute
+  '/app/event/booking': typeof AppEventBookingIndexRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
+  '/app/event/schedules': typeof AppEventSchedulesIndexRoute
+  '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRoutesById {
@@ -113,8 +154,13 @@ export interface FileRoutesById {
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
+  '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/articles/': typeof AppContentArticlesIndexRoute
+  '/app/event/booking/': typeof AppEventBookingIndexRoute
   '/app/event/categories/': typeof AppEventCategoriesIndexRoute
+  '/app/event/schedules/': typeof AppEventSchedulesIndexRoute
+  '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
 export interface FileRouteTypes {
@@ -128,8 +174,13 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/articles'
+    | '/app/event/booking'
     | '/app/event/categories'
+    | '/app/event/schedules'
+    | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -140,8 +191,13 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/articles'
+    | '/app/event/booking'
     | '/app/event/categories'
+    | '/app/event/schedules'
+    | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   id:
     | '__root__'
@@ -153,8 +209,13 @@ export interface FileRouteTypes {
     | '/app/dashboard/user'
     | '/app/dashboard/'
     | '/app/event/'
+    | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/articles/'
+    | '/app/event/booking/'
     | '/app/event/categories/'
+    | '/app/event/schedules/'
+    | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   fileRoutesById: FileRoutesById
 }
@@ -222,11 +283,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardOverviewRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/event/schedules/': {
+      id: '/app/event/schedules/'
+      path: '/event/schedules'
+      fullPath: '/app/event/schedules'
+      preLoaderRoute: typeof AppEventSchedulesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/event/categories/': {
       id: '/app/event/categories/'
       path: '/event/categories'
       fullPath: '/app/event/categories'
       preLoaderRoute: typeof AppEventCategoriesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/event/booking/': {
+      id: '/app/event/booking/'
+      path: '/event/booking'
+      fullPath: '/app/event/booking'
+      preLoaderRoute: typeof AppEventBookingIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/content/articles/': {
+      id: '/app/content/articles/'
+      path: '/content/articles'
+      fullPath: '/app/content/articles'
+      preLoaderRoute: typeof AppContentArticlesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/event/categories/new': {
@@ -236,11 +318,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventCategoriesNewRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/content/article/new': {
+      id: '/app/content/article/new'
+      path: '/content/article/new'
+      fullPath: '/app/content/article/new'
+      preLoaderRoute: typeof AppContentArticleNewRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/event/categories/update/$catId': {
       id: '/app/event/categories/update/$catId'
       path: '/event/categories/update/$catId'
       fullPath: '/app/event/categories/update/$catId'
       preLoaderRoute: typeof AppEventCategoriesUpdateCatIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/content/article/update/$arId': {
+      id: '/app/content/article/update/$arId'
+      path: '/content/article/update/$arId'
+      fullPath: '/app/content/article/update/$arId'
+      preLoaderRoute: typeof AppContentArticleUpdateArIdRouteImport
       parentRoute: typeof AppRouteRoute
     }
   }
@@ -252,8 +348,13 @@ interface AppRouteRouteChildren {
   AppDashboardUserRoute: typeof AppDashboardUserRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppEventIndexRoute: typeof AppEventIndexRoute
+  AppContentArticleNewRoute: typeof AppContentArticleNewRoute
   AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
+  AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
+  AppEventBookingIndexRoute: typeof AppEventBookingIndexRoute
   AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
+  AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
+  AppContentArticleUpdateArIdRoute: typeof AppContentArticleUpdateArIdRoute
   AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
 }
 
@@ -263,8 +364,13 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardUserRoute: AppDashboardUserRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppEventIndexRoute: AppEventIndexRoute,
+  AppContentArticleNewRoute: AppContentArticleNewRoute,
   AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
+  AppContentArticlesIndexRoute: AppContentArticlesIndexRoute,
+  AppEventBookingIndexRoute: AppEventBookingIndexRoute,
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
+  AppEventSchedulesIndexRoute: AppEventSchedulesIndexRoute,
+  AppContentArticleUpdateArIdRoute: AppContentArticleUpdateArIdRoute,
   AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
 }
 

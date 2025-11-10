@@ -3,15 +3,24 @@ import './index.css'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-
-// Import the generated route tree
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { routeTree } from './routeTree.gen'
 import { Toaster } from 'sonner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useAuthStore from './store/authStore'
 
 // Create a new router instance
-const queryClient = new QueryClient()
+const queryClient = new QueryClient(
+  {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 24, // 24 jam (tidak dianggap usang)
+        gcTime: 1000 * 60 * 60 * 24,    // 24 jam (garbage collect setelah 24 jam)
+      },
+    },
+  }
+)
 
 // Set up a Router instance
 const router = createRouter({
@@ -40,6 +49,7 @@ function MainApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} context={{ queryClient, authStore }} />
+      <ReactQueryDevtools initialIsOpen={false} />
       <Toaster />
     </QueryClientProvider>
   )

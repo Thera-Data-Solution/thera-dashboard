@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sidebar"
 import { DEFAULT_MENU, SUPER_ADMIN_MENU } from "@/constants/menu"
 import useAuthStore from "@/store/authStore"
+import { APP_VERSION } from "@/constants/config"
 
 const data = {
   navSecondary: [
@@ -53,7 +54,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate text-xs">Version {APP_VERSION}</span>
                 </div>
               </a>
             </SidebarMenuButton>

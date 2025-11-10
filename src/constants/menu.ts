@@ -28,13 +28,14 @@ export const DEFAULT_MENU = [
         items: [
             {
                 title: "Overview",
-                url: "/app/dashboard/overview",
+                url: "/app/dashboard/overview/",
             }
         ],
     },
     {
         title: "Event Management",
         url: "/app/event/categories",
+        path: "/app/event",
         icon: CalendarRange,
         items: [
             {
@@ -43,11 +44,11 @@ export const DEFAULT_MENU = [
             },
             {
                 title: "Schedule",
-                url: "#",
+                url: "/app/event/schedules",
             },
             {
                 title: "Bookings",
-                url: "#",
+                url: "/app/event/booking",
             },
             {
                 title: "Reviews",
@@ -57,12 +58,13 @@ export const DEFAULT_MENU = [
     },
     {
         title: "Content Management",
-        url: "#",
+        url: "/app/content/articles",
+        path: "/app/content",
         icon: Newspaper,
         items: [
             {
                 title: "Articles",
-                url: "#",
+                url: "/app/content/articles",
             },
             {
                 title: "Gallery",
