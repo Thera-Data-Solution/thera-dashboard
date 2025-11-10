@@ -43,7 +43,7 @@ export function NavMain({ items }: NavMainProps) {
         {items.map((item) => {
           const isOpen = currentPath.includes(item.path ?? "#")
           return (
-            <Collapsible key={item.title} asChild defaultOpen={isOpen}>
+            <Collapsible key={item.title} asChild open={isOpen}>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip={item.title}>
                   <Link to={item.url}>
@@ -64,7 +64,7 @@ export function NavMain({ items }: NavMainProps) {
                     <CollapsibleContent>
                       <SidebarMenuSub>
                         {item.items.map((subItem) => {
-                          const isActive = currentPath === subItem.url
+                          const isActive = currentPath.includes(subItem.url)
                           return (
                             <SidebarMenuSubItem
                               key={subItem.title}

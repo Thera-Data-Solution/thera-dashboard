@@ -8,13 +8,16 @@ export const Route = createFileRoute('/app/event/categories/')({
 })
 
 function RouteComponent() {
-  const { data, isLoading } = useQuery({ queryKey: ["categories"], queryFn: getCategories });
-  if(isLoading) return <div>Loading...</div>
-  if(!data) return <div>No data</div>
+  const { data, isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories
+  });
+  if (isLoading) return <div>Loading...</div>
+  if (!data) return <div>No data</div>
   return (
     <div>
       <div className='font-bold text-xl'>Event Categories</div>
       <CategoryClient categories={data || []} />
     </div>
-)
+  )
 }

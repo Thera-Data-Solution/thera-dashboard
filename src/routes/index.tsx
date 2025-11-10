@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, redirect } from "@tanstack/react-router"
 import { LoginForm } from "@/components/form/login-form";
 import { loginApi } from "@/api/auth";
 import useAuthStore from "@/store/authStore";
@@ -6,13 +6,24 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute('/')({
-  component: LoginPage,
-})
 
-export default function LoginPage() {
-    const [loading, setLoading] = useState<boolean>(false);
-    const navigate = useNavigate();
+export const Route = createFileRoute('/')({
+    beforeLoad: ({ context }) => {
+        const { authStore } = context;
+        const { token, isLoggedIn } = authStore.getState();
+
+        if (token && isLoggedIn) {
+            throw redirect({
+                to: '/app',
+                replace: true,
+            });
+        }
+    },
+    component: LoginPage,
+});
+
+function LoginPage() {
+    const [loading, setLoading] = useState(false);
     const { login } = useAuthStore((state) => state);
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,30 +34,19 @@ export default function LoginPage() {
 
         setLoading(true);
         try {
-            const { token } = await loginApi({
-                email,
-                password
-            });
-
+            const { token } = await loginApi({ email, password });
             login(token);
-
-            toast.success("Berhasil")
-            navigate({
-                to: '/app',
-                replace: true
-            })
-
+            toast.success("Berhasil login");
+            window.location.href = "/app"; // ✅ lebih cepat dan aman setelah login
         } catch (error) {
             if (error instanceof AxiosError) {
                 const data = error.response?.data as { error?: string; message?: string };
-                const errorMessage =
-                    data?.error || data?.message || 'Login gagal. Periksa kredensial Anda.';
-                toast.error(errorMessage)
+                const msg = data?.error || data?.message || "Login gagal. Periksa kredensial Anda.";
+                toast.error(msg);
             } else {
-                toast.error("Terjadi kesalahan pada sistem")
+                toast.error("Terjadi kesalahan pada sistem");
             }
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -57,5 +57,5 @@ export default function LoginPage() {
                 <LoginForm onSubmit={onSubmit} loading={loading} />
             </div>
         </div>
-    )
+    );
 }

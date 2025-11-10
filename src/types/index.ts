@@ -1,21 +1,21 @@
 import { z } from "zod";
 
 export interface ICategory {
-    id: string,
-    name: string,
-    description: string | null,
-    descriptionEn: string | null,
-    disable: boolean,
-    image: string | null,
-    isFree: boolean,
-    isGroup: boolean,
-    isManual: boolean,
-    isPayAsYouWish: boolean,
-    location: string | null,
-    price: number | null,
-    slug: string,
-    start: number,
-    end: number,
+  id: string,
+  name: string,
+  description: string | null,
+  descriptionEn: string | null,
+  disable: boolean,
+  image: string | null,
+  isFree: boolean,
+  isGroup: boolean,
+  isManual: boolean,
+  isPayAsYouWish: boolean,
+  location: string | null,
+  price: number | null,
+  slug: string,
+  start: number,
+  end: number,
 }
 
 export const CategoriesSchema = z
@@ -108,3 +108,44 @@ export const CategoriesSchema = z
       });
     }
   });
+
+export type CategoryAdmin = {
+  id: string;
+  name: string;
+  start: number;
+  end: number;
+  price: number;
+  image: string | null;
+};
+
+export type ScheduleAdmin = {
+  id: string;
+  date: string;
+  time: string;
+  dateTime: Date;
+  status: string;
+  categories: CategoryAdmin;
+};
+
+
+export interface IBooking {
+  id: string
+  bookedAt: string
+  user: {
+    id: string;
+    fullName: string
+    email: string
+    avatar: string
+  }
+  schedule: {
+    id: string
+    dateTime: string
+    status: string;
+    categories: {
+      id: string;
+      name: string
+      location: string
+      image: string
+    }
+  }
+}
