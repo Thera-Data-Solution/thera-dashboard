@@ -72,7 +72,7 @@ export const DEFAULT_MENU = [
             },
             {
                 title: "Hero Section",
-                url: "#",
+                url: "/app/content/hero",
             },
             {
                 title: "Footer Links",
