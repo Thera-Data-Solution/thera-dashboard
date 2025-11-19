@@ -5,6 +5,13 @@ import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/event/categories/update/$catId')({
   component: RouteComponent,
+  loader: ({ context, params }) => {
+    const { catId } = params
+    context.queryClient.prefetchQuery({
+      queryKey: ["category", catId],
+      queryFn: () => getCategoryById(catId),
+    })
+  }
 })
 
 function RouteComponent() {

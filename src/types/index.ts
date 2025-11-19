@@ -1,21 +1,21 @@
 import { z } from "zod";
 
 export interface ICategory {
-  id: string,
-  name: string,
-  description: string | null,
-  descriptionEn: string | null,
-  disable: boolean,
-  image: string | null,
-  isFree: boolean,
-  isGroup: boolean,
-  isManual: boolean,
-  isPayAsYouWish: boolean,
-  location: string | null,
-  price: number | null,
-  slug: string,
-  start: number,
-  end: number,
+  id: string;
+  name: string;
+  description: string | null;
+  descriptionEn: string | null;
+  disable: boolean;
+  image: string | null;
+  isFree: boolean;
+  isGroup: boolean;
+  isManual: boolean;
+  isPayAsYouWish: boolean;
+  location: string | null;
+  price: number | null;
+  slug: string;
+  start: number;
+  end: number;
 }
 
 export const CategoriesSchema = z
@@ -127,25 +127,35 @@ export type ScheduleAdmin = {
   categories: CategoryAdmin;
 };
 
-
 export interface IBooking {
-  id: string
-  bookedAt: string
+  id: string;
+  bookedAt: string;
   user: {
     id: string;
-    fullName: string
-    email: string
-    avatar: string
-  }
+    fullName: string;
+    email: string;
+    avatar: string;
+  };
   schedule: {
-    id: string
-    dateTime: string
+    id: string;
+    dateTime: string;
     status: string;
     categories: {
       id: string;
-      name: string
-      location: string
-      image: string
-    }
-  }
+      name: string;
+      location: string;
+      image: string;
+    };
+  };
 }
+
+export type TFooter = {
+  id: string;
+  name: string;
+  value: string;
+  type: string;
+  icon: string;
+  order: number;
+  createdAt: string;
+  tenantId: string;
+};

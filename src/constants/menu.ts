@@ -75,8 +75,8 @@ export const DEFAULT_MENU = [
                 url: "/app/content/hero",
             },
             {
-                title: "Footer Links",
-                url: "#",
+                title: "Social Links",
+                url: "/app/content/social",
             },
         ],
     },

@@ -20,6 +20,7 @@ import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard
 import { Route as AppEventSchedulesIndexRouteImport } from './routes/app.event.schedules.index'
 import { Route as AppEventCategoriesIndexRouteImport } from './routes/app.event.categories.index'
 import { Route as AppEventBookingIndexRouteImport } from './routes/app.event.booking.index'
+import { Route as AppContentSocialIndexRouteImport } from './routes/app.content.social.index'
 import { Route as AppContentHeroIndexRouteImport } from './routes/app.content.hero.index'
 import { Route as AppContentArticlesIndexRouteImport } from './routes/app.content.articles.index'
 import { Route as AppEventCategoriesNewRouteImport } from './routes/app.event.categories.new'
@@ -82,6 +83,11 @@ const AppEventBookingIndexRoute = AppEventBookingIndexRouteImport.update({
   path: '/event/booking/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppContentSocialIndexRoute = AppContentSocialIndexRouteImport.update({
+  id: '/content/social/',
+  path: '/content/social/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppContentHeroIndexRoute = AppContentHeroIndexRouteImport.update({
   id: '/content/hero/',
   path: '/content/hero/',
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
   '/app/content/hero': typeof AppContentHeroIndexRoute
+  '/app/content/social': typeof AppContentSocialIndexRoute
   '/app/event/booking': typeof AppEventBookingIndexRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules': typeof AppEventSchedulesIndexRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
   '/app/content/hero': typeof AppContentHeroIndexRoute
+  '/app/content/social': typeof AppContentSocialIndexRoute
   '/app/event/booking': typeof AppEventBookingIndexRoute
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules': typeof AppEventSchedulesIndexRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles/': typeof AppContentArticlesIndexRoute
   '/app/content/hero/': typeof AppContentHeroIndexRoute
+  '/app/content/social/': typeof AppContentSocialIndexRoute
   '/app/event/booking/': typeof AppEventBookingIndexRoute
   '/app/event/categories/': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules/': typeof AppEventSchedulesIndexRoute
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/app/event/categories/new'
     | '/app/content/articles'
     | '/app/content/hero'
+    | '/app/content/social'
     | '/app/event/booking'
     | '/app/event/categories'
     | '/app/event/schedules'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/app/event/categories/new'
     | '/app/content/articles'
     | '/app/content/hero'
+    | '/app/content/social'
     | '/app/event/booking'
     | '/app/event/categories'
     | '/app/event/schedules'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/app/event/categories/new'
     | '/app/content/articles/'
     | '/app/content/hero/'
+    | '/app/content/social/'
     | '/app/event/booking/'
     | '/app/event/categories/'
     | '/app/event/schedules/'
@@ -316,6 +328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventBookingIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/content/social/': {
+      id: '/app/content/social/'
+      path: '/content/social'
+      fullPath: '/app/content/social'
+      preLoaderRoute: typeof AppContentSocialIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/content/hero/': {
       id: '/app/content/hero/'
       path: '/content/hero'
@@ -371,6 +390,7 @@ interface AppRouteRouteChildren {
   AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
   AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
   AppContentHeroIndexRoute: typeof AppContentHeroIndexRoute
+  AppContentSocialIndexRoute: typeof AppContentSocialIndexRoute
   AppEventBookingIndexRoute: typeof AppEventBookingIndexRoute
   AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
   AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
@@ -388,6 +408,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppContentArticlesIndexRoute: AppContentArticlesIndexRoute,
   AppContentHeroIndexRoute: AppContentHeroIndexRoute,
+  AppContentSocialIndexRoute: AppContentSocialIndexRoute,
   AppEventBookingIndexRoute: AppEventBookingIndexRoute,
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
   AppEventSchedulesIndexRoute: AppEventSchedulesIndexRoute,

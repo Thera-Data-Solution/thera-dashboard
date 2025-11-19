@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 
 export const Route = createFileRoute('/')({
-    beforeLoad: ({ context }) => {
+    loader: ({ context }) => {
         const { authStore } = context;
         const { token, isLoggedIn } = authStore.getState();
 
