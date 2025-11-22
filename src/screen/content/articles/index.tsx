@@ -1,8 +1,12 @@
 "use client"
-import { KepsDataEntry, type Column } from "@/components/data-grid";
-import { useNavigate } from "@tanstack/react-router";
-import { format } from "date-fns";
-import { Plus } from "lucide-react";
+
+import {useNavigate} from "@tanstack/react-router";
+import {format} from "date-fns";
+import type {ColumnDef} from "@tanstack/react-table";
+import {DataTableArticle} from "@/screen/content/articles/dataTable.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.tsx";
+import {PlusIcon} from "lucide-react";
 
 interface IArticle {
     id: string;
@@ -16,69 +20,81 @@ interface IArticle {
     updatedAt: string;
 }
 
-export default function ArticleClient({ data }: { data: IArticle[] }) {
-  const router = useNavigate()
+export default function ArticleClient({data}: { data: IArticle[] }) {
+    const router = useNavigate()
 
+    const articlesColumns: ColumnDef<IArticle>[] = [
+        {
+            accessorKey: "id",
+            header: "Article Info",
+            cell: ({row}) => {
+                const coverImage = row.original.coverImage;
+                return (
+                    <div className={'flex items-center gap-3'}>
+                        <img src={coverImage} alt="cover" className="w-12 h-12 rounded-md border"/>
+                        <div className="flex flex-col">
+                            <span className="font-medium">{row.original.title}</span>
+                            <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+                                {row.original.excerpt}
+                            </span>
+                        </div>
+                    </div>
+                )
+            }
+        },
+        {
+            accessorKey: "createdAt",
+            header: "Created At",
+            cell: ({row}) => format(new Date(row.original.createdAt), "dd/MM/yyyy")
+        },
+        {
+            accessorKey: "updatedAt",
+            header: "Updated At",
+            cell: ({row}) => format(new Date(row.original.updatedAt), "dd/MM/yyyy")
+        },
+        {
+            accessorKey: "articleType",
+            header: "Type",
+        },
+        {
+            accessorKey: "id",
+            header: "Action",
+            cell: ({row}) => {
+                return (
+                    <div>
+                        <Button
+                            onClick={() => router({to: "/app/content/article/update/$arId", params: {arId: row.id}})}>
+                            Edit
+                        </Button>
+                    </div>
+                )
+            }
+        }
+    ]
 
-  const columns: Column<IArticle, keyof IArticle>[] = [
-    {
-      key: "coverImage",
-      label: "Cover",
-      render: (v, row) =>
-        v ? (
-          <img
-            src={v as string}
-            alt={row.title}
-            className="w-12 h-12 object-cover rounded-md border"
-          />
-        ) : null,
-    },
-    { key: "title", label: "Title" },
-    { key: "articleType", label: "Type" },
-    {
-      key: "createdAt",
-      label: "Created",
-      render: (v) => format(new Date(v as string), "dd/MM/yyyy"),
-    },
-  ];
-
-  const imageKeys: (keyof IArticle) = "coverImage";
-
-  const description: (keyof IArticle)[] = ["articleType"];
-    const newBlog = () => {
-        router({
-            to: '/app/content/article/new',
-            replace: true
-        })
-    }
-  const helpButton = [
-    {
-      key: "new",
-      label: "New Blog",
-      action: newBlog,
-      icon: <Plus />
-    }
-  ]
-
-  const actionButtons = [
-    {
-      key: "Detail",
-      label: "Edit",
-      action: (row: IArticle) => router({ to: "/app/content/article/update/$arId", params: { arId: row.id } }),
-      variant: "outline" as const,
-    },
-  ];
-
-  return (<KepsDataEntry<IArticle>
-        title="Articles"
-        caption="Pages & Blogs"
-        data={data}
-        imageKeys={imageKeys}
-        imageType="banner"
-        columns={columns}
-        titleKey="title"
-        descriptionKeys={description}
-        actionButtons={actionButtons}
-        helpButton={helpButton}
-    />)
+    return (<div>
+            <h1 className="text-2xl font-bold mb-4">List Articles</h1>
+            <DataTableArticle columns={articlesColumns} data={data}/>
+            <div className="fixed bottom-6 right-6">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                onClick={() => router({
+                                    to: '/app/content/article/new',
+                                    replace: false
+                                })}
+                                variant="ghost"
+                                size="lg"
+                                className="bg-primary text-primary-foreground rounded-full h-16 w-16 flex items-center justify-center shadow-lg transition-transform hover:scale-105"
+                            >
+                                <PlusIcon className="h-8 w-8"/>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Add new article</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
+        </div>
+    )
 }

@@ -2,6 +2,7 @@ import { getArticles } from '@/api/articles'
 import ArticleClient from '@/screen/content/articles'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import {Skeleton} from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute('/app/content/articles/')({
   loader: ({ context }) =>
@@ -19,7 +20,12 @@ function RouteComponent() {
   })
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return(
+        <div>
+            <Skeleton className="h-[30px] w-[300px] rounded-md" />
+            <Skeleton className={"w-full h-[200px] mt-8"} />
+        </div>
+    )
   }
 
   if (data && data.data.length > 0) {
