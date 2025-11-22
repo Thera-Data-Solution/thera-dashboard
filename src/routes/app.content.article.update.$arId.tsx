@@ -5,6 +5,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { toast } from 'sonner';
 
 export const Route = createFileRoute('/app/content/article/update/$arId')({
+  loader: ({ context, params }) =>
+    context.queryClient.prefetchQuery({
+      queryKey: ["article", params.arId],
+      queryFn: () => getArticleById(params.arId),
+    }),
   component: RouteComponent,
 })
 

@@ -6,21 +6,11 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { routeTree } from './routeTree.gen'
 import { Toaster } from 'sonner'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/queryClient'
 import useAuthStore from './store/authStore'
 
-// Create a new router instance
-const queryClient = new QueryClient(
-  {
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        staleTime: 1000 * 60 * 60 * 24, // 24 jam (tidak dianggap usang)
-        gcTime: 1000 * 60 * 60 * 24,    // 24 jam (garbage collect setelah 24 jam)
-      },
-    },
-  }
-)
+// QueryClient disentralisasi di '@/lib/queryClient'
 
 // Set up a Router instance
 const router = createRouter({
@@ -30,8 +20,6 @@ const router = createRouter({
     authStore: undefined!,
   },
   defaultPreload: 'intent',
-  // Since we're using React Query, we don't want loader calls to ever be stale
-  // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,
 })

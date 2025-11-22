@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Form,
     FormControl,
@@ -22,7 +22,6 @@ import { CategoriesSchema, type ICategory } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { updateCategory } from "@/api/categories";
 import { Route } from "@/routes/app.event.categories.update.$catId";
-import { useRouter } from "@tanstack/react-router";
 
 // --- Fungsi Format Harga ---
 const formatPrice = (value: number | string) => {
@@ -41,7 +40,6 @@ const formatPrice = (value: number | string) => {
 };
 
 export default function CategoryUpdate({ category }: { category: ICategory }) {
-    const router = useRouter();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     // Hapus state isSubmitting, ganti dengan mutatiation.isPending
     const navigate = useNavigate()

@@ -4,6 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/content/articles/')({
+  loader: ({ context }) =>
+    context.queryClient.prefetchQuery({
+      queryKey: ["articles"],
+      queryFn: () => getArticles(),
+    }),
   component: RouteComponent,
 })
 

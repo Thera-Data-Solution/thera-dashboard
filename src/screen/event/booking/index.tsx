@@ -1,6 +1,6 @@
 import type { IBooking } from "@/types"
 import type { ColumnDef } from "@tanstack/react-table"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { ArrowUpDown, MoreHorizontal, Trash2, XCircle } from "lucide-react"
 
 import { BookingTable } from "./bookingTable"
@@ -90,9 +90,9 @@ export default function BookingPage({ data }: { data: IBooking[] }) {
         onSuccess: () => toast.success("Booking successfully updated"),
     })
 
-    const handleDelete = (id: string) => deleteBookings(id)
-    const handleClose = (id: string) => updateBookings(id)
-    
+    const handleDelete = useCallback((id: string) => deleteBookings(id), [deleteBookings])
+    const handleClose = useCallback((id: string) => updateBookings(id), [updateBookings])
+
     const columns = useMemo<ColumnDef<IBooking>[]>(
         () => [
             {

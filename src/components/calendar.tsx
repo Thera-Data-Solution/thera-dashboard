@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import {
     addMonths,
@@ -88,6 +88,7 @@ export default function CalendarComponents({ data, categories, timezone }: Props
     // 🧩 CREATE
     const createMutation = useMutation({
         mutationFn: async (payload: { dateTime: string; categoryId: string; status: string }) => {
+            setLoading(true);
             const form = new FormData();
             form.append("dateTime", payload.dateTime);
             form.append("categoryId", payload.categoryId);
@@ -99,15 +100,18 @@ export default function CalendarComponents({ data, categories, timezone }: Props
             queryClient.invalidateQueries({ queryKey: ["schedules"] });
             setOpenDrawer(false);
             resetForm();
+            setLoading(false);
         },
         onError: (err: unknown) => {
             toast.error(err instanceof Error ? err.message : "Gagal menambah jadwal");
+            setLoading(false);
         },
     });
 
     // ✏️ UPDATE
     const updateMutation = useMutation({
         mutationFn: async (payload: { id: string; status: string }) => {
+            setLoading(true);
             const form = new FormData();
             form.append("status", payload.status);
             return await updateSchedules(payload.id, form);
@@ -116,9 +120,11 @@ export default function CalendarComponents({ data, categories, timezone }: Props
             toast.success("Status berhasil diperbarui");
             queryClient.invalidateQueries({ queryKey: ["schedules"] });
             setOpenDialog(false);
+            setLoading(false);
         },
         onError: (err: unknown) => {
             toast.error(err instanceof Error ? err.message : "Gagal memperbarui status");
+            setLoading(false);
         },
     });
 

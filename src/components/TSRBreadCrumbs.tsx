@@ -1,12 +1,8 @@
-//TSRBreadCrumbs.tsx
-
 import { Link } from "@tanstack/react-router";
 import { useTSRBreadCrumbs } from "@/hooks/useTsrBreadcrumb";
 import { ChevronRight } from "lucide-react";
 
-interface TSRBreadCrumbsProps { }
-
-export function TSRBreadCrumbs({ }: TSRBreadCrumbsProps) {
+export function TSRBreadCrumbs() {
   const { breadcrumb_routes } = useTSRBreadCrumbs();
   if (breadcrumb_routes.length < 2) return null
   return (

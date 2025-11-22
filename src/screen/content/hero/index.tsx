@@ -79,7 +79,7 @@ export function HeroManagement({ data }: { data: iHero }) {
                 keepTouched: false,
             }
         );
-    }, [data]);
+    }, [data, form]);
 
 
     // -------------------------------------
@@ -231,7 +231,7 @@ export function HeroManagement({ data }: { data: iHero }) {
                 <Controller
                     name="image"
                     control={form.control}
-                    render={({ field, fieldState }) => (
+                    render={({ fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel>Image</FieldLabel>
                             <FieldDescription>Max. 2MB</FieldDescription>
