@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import useAuthStore from "@/store/authStore"
 import { toast } from "sonner"
 import { TSRBreadCrumbs } from "../TSRBreadCrumbs"
+import { LoadScreen } from "@/components/loadingScreen"
 
 export default function Layout() {
   const navigate = useNavigate()
@@ -53,8 +54,8 @@ export default function Layout() {
     };
   }, [token, fetchUser, logout, navigate]);
 
-  if(loading){
-    return null;
+  if (loading) {
+    return <LoadScreen title="Loading" />
   }
 
   return (
