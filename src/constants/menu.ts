@@ -68,7 +68,7 @@ export const DEFAULT_MENU = [
             },
             {
                 title: "Gallery",
-                url: "#",
+                url: "/app/content/gallery",
             },
             {
                 title: "Hero Section",
