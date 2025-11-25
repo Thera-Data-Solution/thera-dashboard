@@ -82,12 +82,13 @@ export const DEFAULT_MENU = [
     },
     {
         title: "Localization",
-        url: "#",
+        url: "/app/localization/translate",
+        path: "/app/localization",
         icon: Globe,
         items: [
             {
                 title: "Translations",
-                url: "#",
+                url: "/app/localization/translate",
             },
         ],
     },
