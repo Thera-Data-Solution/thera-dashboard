@@ -165,7 +165,7 @@ export const SUPER_ADMIN_MENU = [
   },
   {
     name: "All Users",
-    url: "/dashboard/all-users",
+    url: "/app/admin/user",
     icon: Users,
   },
   {
@@ -175,7 +175,7 @@ export const SUPER_ADMIN_MENU = [
   },
   {
     name: "Tenant Users",
-    url: "/dashboard/tenant-users",
+    url: "/app/admin/tenant",
     icon: UserCog,
   },
 ];

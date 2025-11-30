@@ -17,6 +17,8 @@ import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
+import { Route as AppAdminUserRouteImport } from './routes/app.admin.user'
+import { Route as AppAdminTenantRouteImport } from './routes/app.admin.tenant'
 import { Route as AppSettingUserIndexRouteImport } from './routes/app.setting.user.index'
 import { Route as AppSettingAppIndexRouteImport } from './routes/app.setting.app.index'
 import { Route as AppLocalizationTranslateIndexRouteImport } from './routes/app.localization.translate.index'
@@ -70,6 +72,16 @@ const AppDashboardUserRoute = AppDashboardUserRouteImport.update({
 const AppDashboardOverviewRoute = AppDashboardOverviewRouteImport.update({
   id: '/dashboard/overview',
   path: '/dashboard/overview',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminUserRoute = AppAdminUserRouteImport.update({
+  id: '/admin/user',
+  path: '/admin/user',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminTenantRoute = AppAdminTenantRouteImport.update({
+  id: '/admin/tenant',
+  path: '/admin/tenant',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppSettingUserIndexRoute = AppSettingUserIndexRouteImport.update({
@@ -151,6 +163,8 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteRouteWithChildren
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
+  '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
@@ -174,6 +188,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/app': typeof AppIndexRoute
+  '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
@@ -199,6 +215,8 @@ export interface FileRoutesById {
   '/app': typeof AppRouteRouteWithChildren
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
+  '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
@@ -225,6 +243,8 @@ export interface FileRouteTypes {
     | '/app'
     | '/register'
     | '/app/'
+    | '/app/admin/tenant'
+    | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/dashboard'
@@ -248,6 +268,8 @@ export interface FileRouteTypes {
     | '/'
     | '/register'
     | '/app'
+    | '/app/admin/tenant'
+    | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/dashboard'
@@ -272,6 +294,8 @@ export interface FileRouteTypes {
     | '/app'
     | '/register'
     | '/app/'
+    | '/app/admin/tenant'
+    | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/dashboard/'
@@ -354,6 +378,20 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/overview'
       fullPath: '/app/dashboard/overview'
       preLoaderRoute: typeof AppDashboardOverviewRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/admin/user': {
+      id: '/app/admin/user'
+      path: '/admin/user'
+      fullPath: '/app/admin/user'
+      preLoaderRoute: typeof AppAdminUserRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/admin/tenant': {
+      id: '/app/admin/tenant'
+      path: '/admin/tenant'
+      fullPath: '/app/admin/tenant'
+      preLoaderRoute: typeof AppAdminTenantRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/setting/user/': {
@@ -459,6 +497,8 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppAdminTenantRoute: typeof AppAdminTenantRoute
+  AppAdminUserRoute: typeof AppAdminUserRoute
   AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
   AppDashboardUserRoute: typeof AppDashboardUserRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
@@ -481,6 +521,8 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppAdminTenantRoute: AppAdminTenantRoute,
+  AppAdminUserRoute: AppAdminUserRoute,
   AppDashboardOverviewRoute: AppDashboardOverviewRoute,
   AppDashboardUserRoute: AppDashboardUserRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,

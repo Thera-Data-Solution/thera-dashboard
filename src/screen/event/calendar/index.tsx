@@ -37,47 +37,48 @@ export default function SchedulesPage({
     null,
   );
 
-//   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const file = e.target.files?.[0];
-//     if (!file) return;
+  //   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     const file = e.target.files?.[0];
+  //     if (!file) return;
 
-//     const reader = new FileReader();
-//     reader.onload = async (event) => {
-//       const data = new Uint8Array(event.target?.result as ArrayBuffer);
-//       const workbook = XLSX.read(data, { type: "array" });
-//       const sheetName = workbook.SheetNames[0];
-//       const worksheet = workbook.Sheets[sheetName];
-//       const jsonData = XLSX.utils.sheet_to_json(worksheet);
+  //     const reader = new FileReader();
+  //     reader.onload = async (event) => {
+  //       const data = new Uint8Array(event.target?.result as ArrayBuffer);
+  //       const workbook = XLSX.read(data, { type: "array" });
+  //       const sheetName = workbook.SheetNames[0];
+  //       const worksheet = workbook.Sheets[sheetName];
+  //       const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-//       const result = await importSchedules(jsonData);
+  //       const result = await importSchedules(jsonData);
 
-//       if (result.success) {
-//         window.location.reload();
-//       } else {
-//         alert("Gagal import: " + result.message);
-//       }
-//     };
+  //       if (result.success) {
+  //         window.location.reload();
+  //       } else {
+  //         alert("Gagal import: " + result.message);
+  //       }
+  //     };
 
-//     reader.readAsArrayBuffer(file);
-//   };
+  //     reader.readAsArrayBuffer(file);
+  //   };
 
-//   const handleDownloadTemplate = () => {
-//     const worksheet = XLSX.utils.json_to_sheet([
-//       {
-//         id: "",
-//         date: "2025-08-01",
-//         time: "09:00:00",
-//         categoryId: "uuid-kategori-di-sini",
-//       },
-//     ]);
-//     const workbook = XLSX.utils.book_new();
-//     XLSX.utils.book_append_sheet(workbook, worksheet, "Template");
-//     XLSX.writeFile(workbook, "schedules_template.xlsx");
-//   };
+  //   const handleDownloadTemplate = () => {
+  //     const worksheet = XLSX.utils.json_to_sheet([
+  //       {
+  //         id: "",
+  //         date: "2025-08-01",
+  //         time: "09:00:00",
+  //         categoryId: "uuid-kategori-di-sini",
+  //       },
+  //     ]);
+  //     const workbook = XLSX.utils.book_new();
+  //     XLSX.utils.book_append_sheet(workbook, worksheet, "Template");
+  //     XLSX.writeFile(workbook, "schedules_template.xlsx");
+  //   };
 
-  const filteredSchedules = selectedCategoryId
-    ? schedules.filter((s) => s.categories?.id === selectedCategoryId)
-    : schedules;
+  // const filteredSchedules = selectedCategoryId
+  //   ? schedules.filter((s) => s.categories?.id === selectedCategoryId)
+  //   : schedules;
+  const filteredSchedules = selectedCategoryId === "all" ? schedules : schedules.filter((s) => s.categories?.id === selectedCategoryId)
 
   if (timezone === '') {
     return (
@@ -104,6 +105,7 @@ export default function SchedulesPage({
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Kategori</SelectLabel>
+                  <SelectItem value="all">All</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
