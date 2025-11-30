@@ -159,3 +159,25 @@ export type TFooter = {
   createdAt: string;
   tenantId: string;
 };
+
+export interface IUser {
+  id: string;
+  avatar: string;
+  email: string;
+  fullName: string;
+  phone: string;
+  address: string | null;
+  ig: string | null;
+  fb: string | null;
+  tenantName: string | null;
+  disable: boolean;
+}
+
+export interface ITenant {
+  id: string
+  name: string
+  logo: string
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
