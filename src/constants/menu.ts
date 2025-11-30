@@ -94,16 +94,17 @@ export const DEFAULT_MENU = [
     },
     {
         title: "Settings",
-        url: "#",
+        url: "/app/setting/app/",
+        path: "/app/setting",
         icon: Cog,
         items: [
             {
                 title: "Landing Settings",
-                url: "#",
+                url: "/app/setting/app",
             },
             {
                 title: "Users",
-                url: "#",
+                url: "/app/setting/user",
             },
         ],
     },

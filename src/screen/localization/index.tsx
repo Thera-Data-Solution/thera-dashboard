@@ -1,7 +1,7 @@
 import {type FormEvent, useState} from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { DataTableArticle } from '@/screen/content/articles/dataTable.tsx';
-import { Button } from '@/components/ui/button';
+import { DataTableArticle } from '@/screen/content/articles/dataTable';
+import { Button } from '@/components/animate-ui/components/buttons/button';
 import {
     Drawer,
     DrawerClose,
@@ -22,7 +22,7 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from '@/components/animate-ui/components/radix/alert-dialog';
 import {
     useCreateTranslation,
     useUpdateTranslation,

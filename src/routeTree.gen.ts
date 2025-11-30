@@ -17,6 +17,8 @@ import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
+import { Route as AppSettingUserIndexRouteImport } from './routes/app.setting.user.index'
+import { Route as AppSettingAppIndexRouteImport } from './routes/app.setting.app.index'
 import { Route as AppLocalizationTranslateIndexRouteImport } from './routes/app.localization.translate.index'
 import { Route as AppEventSchedulesIndexRouteImport } from './routes/app.event.schedules.index'
 import { Route as AppEventCategoriesIndexRouteImport } from './routes/app.event.categories.index'
@@ -68,6 +70,16 @@ const AppDashboardUserRoute = AppDashboardUserRouteImport.update({
 const AppDashboardOverviewRoute = AppDashboardOverviewRouteImport.update({
   id: '/dashboard/overview',
   path: '/dashboard/overview',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingUserIndexRoute = AppSettingUserIndexRouteImport.update({
+  id: '/setting/user/',
+  path: '/setting/user/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingAppIndexRoute = AppSettingAppIndexRouteImport.update({
+  id: '/setting/app/',
+  path: '/setting/app/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppLocalizationTranslateIndexRoute =
@@ -153,6 +165,8 @@ export interface FileRoutesByFullPath {
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules': typeof AppEventSchedulesIndexRoute
   '/app/localization/translate': typeof AppLocalizationTranslateIndexRoute
+  '/app/setting/app': typeof AppSettingAppIndexRoute
+  '/app/setting/user': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
@@ -174,6 +188,8 @@ export interface FileRoutesByTo {
   '/app/event/categories': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules': typeof AppEventSchedulesIndexRoute
   '/app/localization/translate': typeof AppLocalizationTranslateIndexRoute
+  '/app/setting/app': typeof AppSettingAppIndexRoute
+  '/app/setting/user': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
@@ -197,6 +213,8 @@ export interface FileRoutesById {
   '/app/event/categories/': typeof AppEventCategoriesIndexRoute
   '/app/event/schedules/': typeof AppEventSchedulesIndexRoute
   '/app/localization/translate/': typeof AppLocalizationTranslateIndexRoute
+  '/app/setting/app/': typeof AppSettingAppIndexRoute
+  '/app/setting/user/': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
 }
@@ -221,6 +239,8 @@ export interface FileRouteTypes {
     | '/app/event/categories'
     | '/app/event/schedules'
     | '/app/localization/translate'
+    | '/app/setting/app'
+    | '/app/setting/user'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   fileRoutesByTo: FileRoutesByTo
@@ -242,6 +262,8 @@ export interface FileRouteTypes {
     | '/app/event/categories'
     | '/app/event/schedules'
     | '/app/localization/translate'
+    | '/app/setting/app'
+    | '/app/setting/user'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   id:
@@ -264,6 +286,8 @@ export interface FileRouteTypes {
     | '/app/event/categories/'
     | '/app/event/schedules/'
     | '/app/localization/translate/'
+    | '/app/setting/app/'
+    | '/app/setting/user/'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
   fileRoutesById: FileRoutesById
@@ -330,6 +354,20 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/overview'
       fullPath: '/app/dashboard/overview'
       preLoaderRoute: typeof AppDashboardOverviewRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/setting/user/': {
+      id: '/app/setting/user/'
+      path: '/setting/user'
+      fullPath: '/app/setting/user'
+      preLoaderRoute: typeof AppSettingUserIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/setting/app/': {
+      id: '/app/setting/app/'
+      path: '/setting/app'
+      fullPath: '/app/setting/app'
+      preLoaderRoute: typeof AppSettingAppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/localization/translate/': {
@@ -435,6 +473,8 @@ interface AppRouteRouteChildren {
   AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
   AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
   AppLocalizationTranslateIndexRoute: typeof AppLocalizationTranslateIndexRoute
+  AppSettingAppIndexRoute: typeof AppSettingAppIndexRoute
+  AppSettingUserIndexRoute: typeof AppSettingUserIndexRoute
   AppContentArticleUpdateArIdRoute: typeof AppContentArticleUpdateArIdRoute
   AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
 }
@@ -455,6 +495,8 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
   AppEventSchedulesIndexRoute: AppEventSchedulesIndexRoute,
   AppLocalizationTranslateIndexRoute: AppLocalizationTranslateIndexRoute,
+  AppSettingAppIndexRoute: AppSettingAppIndexRoute,
+  AppSettingUserIndexRoute: AppSettingUserIndexRoute,
   AppContentArticleUpdateArIdRoute: AppContentArticleUpdateArIdRoute,
   AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
 }
