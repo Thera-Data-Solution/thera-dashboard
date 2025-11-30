@@ -18,7 +18,7 @@ import type React from "react"
 export function LoginForm({ onSubmit, loading }: { onSubmit: React.FormEventHandler<HTMLFormElement>, loading: boolean }) {
   return (
     <div className={"flex flex-col gap-6"}>
-      <Card>
+      <Card className="z-10">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
