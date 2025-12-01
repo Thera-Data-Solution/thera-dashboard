@@ -1,21 +1,15 @@
-import { Route } from "@/routes/app.setting.user.index"
-
 export default function Pagination({
     page,
     totalPages,
+    onPageChange
 }: {
     page: number;
     totalPages: number;
+    onPageChange: (p: number) => void
 }) {
-    const navigate = Route.useNavigate();
 
-    const go = (p: number) =>
-        navigate({
-            search: (prev) => ({
-                ...prev,
-                page: p,
-            }),
-        });
+    const go = (p: number) => onPageChange(p)
+
 
     const pagesToShow = getPagination(page, totalPages);
 

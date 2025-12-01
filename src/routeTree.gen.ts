@@ -18,7 +18,10 @@ import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.in
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
 import { Route as AppAdminUserRouteImport } from './routes/app.admin.user'
+import { Route as AppAdminTenantUserRouteImport } from './routes/app.admin.tenant-user'
 import { Route as AppAdminTenantRouteImport } from './routes/app.admin.tenant'
+import { Route as AppAdminSchedulesRouteImport } from './routes/app.admin.schedules'
+import { Route as AppAdminCategoriesRouteImport } from './routes/app.admin.categories'
 import { Route as AppSettingUserIndexRouteImport } from './routes/app.setting.user.index'
 import { Route as AppSettingAppIndexRouteImport } from './routes/app.setting.app.index'
 import { Route as AppLocalizationTranslateIndexRouteImport } from './routes/app.localization.translate.index'
@@ -79,9 +82,24 @@ const AppAdminUserRoute = AppAdminUserRouteImport.update({
   path: '/admin/user',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppAdminTenantUserRoute = AppAdminTenantUserRouteImport.update({
+  id: '/admin/tenant-user',
+  path: '/admin/tenant-user',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppAdminTenantRoute = AppAdminTenantRouteImport.update({
   id: '/admin/tenant',
   path: '/admin/tenant',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminSchedulesRoute = AppAdminSchedulesRouteImport.update({
+  id: '/admin/schedules',
+  path: '/admin/schedules',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminCategoriesRoute = AppAdminCategoriesRouteImport.update({
+  id: '/admin/categories',
+  path: '/admin/categories',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppSettingUserIndexRoute = AppSettingUserIndexRouteImport.update({
@@ -163,7 +181,10 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteRouteWithChildren
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
+  '/app/admin/categories': typeof AppAdminCategoriesRoute
+  '/app/admin/schedules': typeof AppAdminSchedulesRoute
   '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/tenant-user': typeof AppAdminTenantUserRoute
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
@@ -188,7 +209,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/app': typeof AppIndexRoute
+  '/app/admin/categories': typeof AppAdminCategoriesRoute
+  '/app/admin/schedules': typeof AppAdminSchedulesRoute
   '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/tenant-user': typeof AppAdminTenantUserRoute
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
@@ -215,7 +239,10 @@ export interface FileRoutesById {
   '/app': typeof AppRouteRouteWithChildren
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
+  '/app/admin/categories': typeof AppAdminCategoriesRoute
+  '/app/admin/schedules': typeof AppAdminSchedulesRoute
   '/app/admin/tenant': typeof AppAdminTenantRoute
+  '/app/admin/tenant-user': typeof AppAdminTenantUserRoute
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
@@ -243,7 +270,10 @@ export interface FileRouteTypes {
     | '/app'
     | '/register'
     | '/app/'
+    | '/app/admin/categories'
+    | '/app/admin/schedules'
     | '/app/admin/tenant'
+    | '/app/admin/tenant-user'
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
@@ -268,7 +298,10 @@ export interface FileRouteTypes {
     | '/'
     | '/register'
     | '/app'
+    | '/app/admin/categories'
+    | '/app/admin/schedules'
     | '/app/admin/tenant'
+    | '/app/admin/tenant-user'
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
@@ -294,7 +327,10 @@ export interface FileRouteTypes {
     | '/app'
     | '/register'
     | '/app/'
+    | '/app/admin/categories'
+    | '/app/admin/schedules'
     | '/app/admin/tenant'
+    | '/app/admin/tenant-user'
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
@@ -387,11 +423,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminUserRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/admin/tenant-user': {
+      id: '/app/admin/tenant-user'
+      path: '/admin/tenant-user'
+      fullPath: '/app/admin/tenant-user'
+      preLoaderRoute: typeof AppAdminTenantUserRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/admin/tenant': {
       id: '/app/admin/tenant'
       path: '/admin/tenant'
       fullPath: '/app/admin/tenant'
       preLoaderRoute: typeof AppAdminTenantRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/admin/schedules': {
+      id: '/app/admin/schedules'
+      path: '/admin/schedules'
+      fullPath: '/app/admin/schedules'
+      preLoaderRoute: typeof AppAdminSchedulesRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/admin/categories': {
+      id: '/app/admin/categories'
+      path: '/admin/categories'
+      fullPath: '/app/admin/categories'
+      preLoaderRoute: typeof AppAdminCategoriesRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/setting/user/': {
@@ -497,7 +554,10 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppAdminCategoriesRoute: typeof AppAdminCategoriesRoute
+  AppAdminSchedulesRoute: typeof AppAdminSchedulesRoute
   AppAdminTenantRoute: typeof AppAdminTenantRoute
+  AppAdminTenantUserRoute: typeof AppAdminTenantUserRoute
   AppAdminUserRoute: typeof AppAdminUserRoute
   AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
   AppDashboardUserRoute: typeof AppDashboardUserRoute
@@ -521,7 +581,10 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppAdminCategoriesRoute: AppAdminCategoriesRoute,
+  AppAdminSchedulesRoute: AppAdminSchedulesRoute,
   AppAdminTenantRoute: AppAdminTenantRoute,
+  AppAdminTenantUserRoute: AppAdminTenantUserRoute,
   AppAdminUserRoute: AppAdminUserRoute,
   AppDashboardOverviewRoute: AppDashboardOverviewRoute,
   AppDashboardUserRoute: AppDashboardUserRoute,

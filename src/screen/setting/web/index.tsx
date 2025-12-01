@@ -14,7 +14,7 @@ import {
     FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Switch } from '@/components/animate-ui/components/base/switch';
+import { Switch } from '@/components/ui/switch';
 import { LoadScreen } from "@/components/loadingScreen";
 import {
     Select,
@@ -100,7 +100,7 @@ export default function AppSettingScreen() {
                 appLogo: query.data.appLogo ?? undefined,
             });
         }
-    }, [query.data]);
+    }, [form, query.data]);
 
     const queryClient = useQueryClient();
 
