@@ -14,7 +14,7 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogCancel,
-} from '@/components/animate-ui/components/radix/alert-dialog';
+} from '@/components/ui/alert-dialog';
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { DisableUser } from "@/api/user";
@@ -24,18 +24,21 @@ import { toast } from "sonner";
 interface showing {
     show: boolean
     user: IUser | null
-    type: boolean
+    type: boolean,
 }
 export default function ListUser({
     user,
     page,
     totalPages,
-    admin = false
+    admin = false,
+    onPageChange,
+
 }: {
     user: IUser[],
     page: number,
     totalPages: number,
-    admin: boolean
+    admin: boolean,
+    onPageChange: (page: number) => void
 }) {
     const [disableUser, setDisableUser] = useState<showing>({
         show: false,
@@ -155,7 +158,7 @@ export default function ListUser({
                 columns={columns}
                 data={user}
             />
-            <Pagination page={page} totalPages={totalPages} />
+            <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
 
             <AlertDialog open={disableUser.show} onOpenChange={() => setDisableUser({ show: false, user: null, type: false })}>
                 <AlertDialogContent className="sm:max-w-[425px]">
@@ -169,7 +172,7 @@ export default function ListUser({
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <Button onClick={()=> adisableUser(disableUser.user ? disableUser.user.id : "")}>{isPending ? <Loader2Icon className="animate-spin" /> : "Submit"} </Button>
+                        <Button onClick={() => adisableUser(disableUser.user ? disableUser.user.id : "")}>{isPending ? <Loader2Icon className="animate-spin" /> : "Submit"} </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

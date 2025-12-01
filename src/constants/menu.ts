@@ -115,12 +115,12 @@ export const DEFAULT_MENU = [
 export const SUPER_ADMIN_MENU = [
   {
     name: "All Schedule Categories",
-    url: "/dashboard/all-schedule-categories",
+    url: "/app/admin/categories",
     icon: ListChecks,
   },
   {
     name: "All Schedules",
-    url: "/dashboard/all-schedules",
+    url: "/app/admin/schedules",
     icon: CalendarCheck,
   },
   {
@@ -170,12 +170,12 @@ export const SUPER_ADMIN_MENU = [
   },
   {
     name: "Tenants",
-    url: "/dashboard/tenants",
+    url: "/app/admin/tenant",
     icon: AppWindow,
   },
   {
     name: "Tenant Users",
-    url: "/app/admin/tenant",
+    url: "/app/admin/tenant-user",
     icon: UserCog,
   },
 ];

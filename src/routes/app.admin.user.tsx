@@ -21,6 +21,7 @@ export const Route = createFileRoute('/app/admin/user')({
 
 function RouteComponent() {
     const { page } = Route.useSearch()
+    const navigate = Route.useNavigate()
     const { data, isFetching } = useQuery({
         queryKey: ['admin-users', page],
         queryFn: () => AdminGetUsers(page),
@@ -34,6 +35,9 @@ function RouteComponent() {
                 page={page}
                 totalPages={data.totalPages}
                 admin={true}
+                onPageChange={(p) =>
+                    navigate({ search: { page: p } })
+                }
             />
         </div>
     )

@@ -5,7 +5,6 @@ import useAuthStore from "@/store/authStore";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
-import { HoleBackground } from "@/components/animate-ui/components/backgrounds/hole";
 
 
 export const Route = createFileRoute('/')({
@@ -54,8 +53,6 @@ function LoginPage() {
 
     return (
         <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-
-            <HoleBackground className="absolute inset-0 flex items-center justify-center rounded-xl z-0" />
             <div className="w-full max-w-sm">
                 <LoginForm onSubmit={onSubmit} loading={loading} />
             </div>

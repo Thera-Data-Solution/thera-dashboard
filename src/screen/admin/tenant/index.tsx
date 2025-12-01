@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "./userDataTable";
 
-import { LiquidButton } from "@/components/animate-ui/components/buttons/liquid";
 import { CircleMinus, PencilIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -129,7 +128,7 @@ export default function TenantScreen({ data }: { data: ITenant[] }) {
                 const tenant = row.original;
                 return (
                     <div className="flex gap-2">
-                        <LiquidButton
+                        <Button
                             size="icon"
                             onClick={() => {
                                 setSelectedItem(tenant);
@@ -141,7 +140,7 @@ export default function TenantScreen({ data }: { data: ITenant[] }) {
                             }}
                         >
                             <PencilIcon />
-                        </LiquidButton>
+                        </Button>
 
                         <Button
                             variant="destructive"
@@ -164,9 +163,9 @@ export default function TenantScreen({ data }: { data: ITenant[] }) {
             <div className="flex justify-between mb-4">
                 <div className="text-xl font-bold">All Tenants</div>
 
-                <LiquidButton size="sm" onClick={() => setNewOpen(true)}>
+                <Button size="sm" onClick={() => setNewOpen(true)}>
                     <PlusIcon /> New Tenant
-                </LiquidButton>
+                </Button>
             </div>
 
             <DataTable data={data} columns={columns} />
