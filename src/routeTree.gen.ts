@@ -10,11 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AppRouteRouteImport } from './routes/app.route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSettingIndexRouteImport } from './routes/app.setting.index'
+import { Route as AppLocalizationIndexRouteImport } from './routes/app.localization.index'
 import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
+import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
 import { Route as AppAdminUserRouteImport } from './routes/app.admin.user'
@@ -42,6 +46,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/app',
   path: '/app',
@@ -57,6 +66,16 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppSettingIndexRoute = AppSettingIndexRouteImport.update({
+  id: '/setting/',
+  path: '/setting/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppLocalizationIndexRoute = AppLocalizationIndexRouteImport.update({
+  id: '/localization/',
+  path: '/localization/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppEventIndexRoute = AppEventIndexRouteImport.update({
   id: '/event/',
   path: '/event/',
@@ -65,6 +84,11 @@ const AppEventIndexRoute = AppEventIndexRouteImport.update({
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppContentIndexRoute = AppContentIndexRouteImport.update({
+  id: '/content/',
+  path: '/content/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppDashboardUserRoute = AppDashboardUserRouteImport.update({
@@ -179,6 +203,7 @@ const AppContentArticleUpdateArIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
@@ -188,8 +213,11 @@ export interface FileRoutesByFullPath {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/content': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/localization': typeof AppLocalizationIndexRoute
+  '/app/setting': typeof AppSettingIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
@@ -207,6 +235,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
   '/app': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
@@ -216,8 +245,11 @@ export interface FileRoutesByTo {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/content': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
+  '/app/localization': typeof AppLocalizationIndexRoute
+  '/app/setting': typeof AppSettingIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
@@ -237,6 +269,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
@@ -246,8 +279,11 @@ export interface FileRoutesById {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/content/': typeof AppContentIndexRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
+  '/app/localization/': typeof AppLocalizationIndexRoute
+  '/app/setting/': typeof AppSettingIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles/': typeof AppContentArticlesIndexRoute
@@ -268,6 +304,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/dashboard'
     | '/register'
     | '/app/'
     | '/app/admin/categories'
@@ -277,8 +314,11 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/content'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/localization'
+    | '/app/setting'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles'
@@ -296,6 +336,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard'
     | '/register'
     | '/app'
     | '/app/admin/categories'
@@ -305,8 +346,11 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/content'
     | '/app/dashboard'
     | '/app/event'
+    | '/app/localization'
+    | '/app/setting'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles'
@@ -325,6 +369,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/dashboard'
     | '/register'
     | '/app/'
     | '/app/admin/categories'
@@ -334,8 +379,11 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/content/'
     | '/app/dashboard/'
     | '/app/event/'
+    | '/app/localization/'
+    | '/app/setting/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles/'
@@ -355,6 +403,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -365,6 +414,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app': {
@@ -388,6 +444,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/setting/': {
+      id: '/app/setting/'
+      path: '/setting'
+      fullPath: '/app/setting'
+      preLoaderRoute: typeof AppSettingIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/localization/': {
+      id: '/app/localization/'
+      path: '/localization'
+      fullPath: '/app/localization'
+      preLoaderRoute: typeof AppLocalizationIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/event/': {
       id: '/app/event/'
       path: '/event'
@@ -400,6 +470,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/app/dashboard'
       preLoaderRoute: typeof AppDashboardIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/content/': {
+      id: '/app/content/'
+      path: '/content'
+      fullPath: '/app/content'
+      preLoaderRoute: typeof AppContentIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/dashboard/user': {
@@ -561,8 +638,11 @@ interface AppRouteRouteChildren {
   AppAdminUserRoute: typeof AppAdminUserRoute
   AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
   AppDashboardUserRoute: typeof AppDashboardUserRoute
+  AppContentIndexRoute: typeof AppContentIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppEventIndexRoute: typeof AppEventIndexRoute
+  AppLocalizationIndexRoute: typeof AppLocalizationIndexRoute
+  AppSettingIndexRoute: typeof AppSettingIndexRoute
   AppContentArticleNewRoute: typeof AppContentArticleNewRoute
   AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
   AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
@@ -588,8 +668,11 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAdminUserRoute: AppAdminUserRoute,
   AppDashboardOverviewRoute: AppDashboardOverviewRoute,
   AppDashboardUserRoute: AppDashboardUserRoute,
+  AppContentIndexRoute: AppContentIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppEventIndexRoute: AppEventIndexRoute,
+  AppLocalizationIndexRoute: AppLocalizationIndexRoute,
+  AppSettingIndexRoute: AppSettingIndexRoute,
   AppContentArticleNewRoute: AppContentArticleNewRoute,
   AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppContentArticlesIndexRoute: AppContentArticlesIndexRoute,
@@ -613,6 +696,7 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
+  DashboardRoute: DashboardRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport

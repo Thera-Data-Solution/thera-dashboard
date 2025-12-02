@@ -1,12 +1,13 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/app/')({
+export const Route = createFileRoute('/app/localization/')({
   component: RouteComponent,
   loader: () => {
     throw redirect({
-      to: "/dashboard",
+      to: "/app/localization/translate",
     });
   }
+
 })
 
 function RouteComponent() {

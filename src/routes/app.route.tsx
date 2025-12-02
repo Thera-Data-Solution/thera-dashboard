@@ -2,7 +2,7 @@ import Layout from '@/components/layout/default'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app')({
-  component: Layout,
+  component: RouteComponent,
   loader: ({ context }) => {
     if (!context.authStore.getState().isLoggedIn) {
       throw redirect({
@@ -11,3 +11,7 @@ export const Route = createFileRoute('/app')({
     }
   },
 })
+
+function RouteComponent() {
+  return <Layout />
+}

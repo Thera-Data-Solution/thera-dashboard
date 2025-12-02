@@ -8,7 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute('/register')({
-  component: SignupPage,
+    component: SignupPage,
 })
 
 function SignupPage() {
@@ -41,7 +41,7 @@ function SignupPage() {
 
             toast.success('Registrasi berhasil! Selamat datang di dashboard.');
             navigate({
-                to: '/app',
+                to: '/dashboard',
                 replace: true
             });
 
