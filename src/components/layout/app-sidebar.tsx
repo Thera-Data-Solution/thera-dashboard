@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import {
-  Command,
   LifeBuoy,
+  MoveLeft,
   Send,
 } from "lucide-react"
 
@@ -20,9 +20,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { DEFAULT_MENU, SUPER_ADMIN_MENU } from "@/constants/menu"
+import { SUPER_ADMIN_MENU } from "@/constants/menu"
 import useAuthStore from "@/store/authStore"
-import { APP_VERSION } from "@/constants/config"
+import { useActiveMenu } from "@/lib/activeMenu"
+import { Link } from "@tanstack/react-router"
 
 const data = {
   navSecondary: [
@@ -42,27 +43,30 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore((state) => state);
+  const x = useActiveMenu();
+  const parents = x?.parent ? [x.parent] : [];
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link to="/dashboard">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                  <MoveLeft className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Version {APP_VERSION}</span>
+                  <span className="truncate font-medium">Back To Dashboard</span>
+                  <span className="truncate text-xs">Dashboard</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={DEFAULT_MENU} />
+        <NavMain items={parents} />
         {user && user.role === 'SU' && (
           <NavProjects projects={SUPER_ADMIN_MENU} />
         )}

@@ -41,9 +41,8 @@ export function NavMain({ items }: NavMainProps) {
       <SidebarGroupLabel>App</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
-          const isOpen = currentPath.includes(item.path ?? "#")
           return (
-            <Collapsible key={item.title} asChild open={isOpen}>
+            <Collapsible key={item.title} asChild open={true}>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip={item.title}>
                   <Link to={item.url}>

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/')({
 
         if (token && isLoggedIn) {
             throw redirect({
-                to: '/app',
+                to: '/dashboard',
                 replace: true,
             });
         }
@@ -37,7 +37,7 @@ function LoginPage() {
             const { token } = await loginApi({ email, password });
             login(token);
             toast.success("Berhasil login");
-            window.location.href = "/app"; // ✅ lebih cepat dan aman setelah login
+            window.location.href = "/dashboard";
         } catch (error) {
             if (error instanceof AxiosError) {
                 const data = error.response?.data as { error?: string; message?: string };
