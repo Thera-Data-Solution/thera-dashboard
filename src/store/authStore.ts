@@ -3,10 +3,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import axios from "axios";
 import { fetchMeApi, type User } from "@/api/auth.js";
 
+
 interface AuthState {
   token: string | null;
   isLoggedIn: boolean;
   user: User | null;
+  menu: string[];
 
   login: (token: string) => void;
   logout: () => void;
@@ -19,12 +21,13 @@ const useAuthStore = create<AuthState>()(
       token: null,
       isLoggedIn: false,
       user: null,
+      menu: [],
 
       login: (token) => {
         set({ token, isLoggedIn: !!token });
       },
       logout: () => {
-        set({ token: null, isLoggedIn: false, user: null });
+        set({ token: null, isLoggedIn: false, user: null, menu: [] });
       },
 
       fetchUser: async () => {
@@ -33,7 +36,7 @@ const useAuthStore = create<AuthState>()(
 
         try {
           const userData: User = await fetchMeApi(token);
-          set({ user: userData, isLoggedIn: true });
+          set({ user: userData, isLoggedIn: true, menu: ["website", "content", "translation", "event"] });
         } catch (error) {
           console.error("Gagal mengambil data pengguna:", error);
 

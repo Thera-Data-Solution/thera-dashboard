@@ -1,115 +1,120 @@
 import {
-    AppWindow,
-    CalendarCheck,
-    CalendarRange,
-    ClipboardList,
-    Cog,
-    Command,
-    FileText,
-    Globe,
-    ImageIcon,
-    LinkIcon,
-    ListChecks,
-    MessageSquare,
-    Monitor,
-    Newspaper,
-    Settings,
-    UserCog,
-    Users
-}
-    from "lucide-react";
+  Command,
+  CalendarCheck,
+  Tags,
+  CalendarDays,
+  ClipboardList,
+  MessageSquare,
+  Newspaper,
+  ImageIcon,
+  Monitor,
+  Link2,
+  Globe,
+  Cog,
+  Users,
+  ListChecks,
+  FileText,
+  LinkIcon,
+  Settings,
+  AppWindow,
+  UserCog
+} from "lucide-react";
 
 export const DEFAULT_MENU = [
-    {
-        title: "Dashboard",
-        url: "/app/dashboard/overview",
-        path: "/app/dashboard",
-        icon: Command,
-        items: [
-            {
-                title: "Overview",
-                url: "/app/dashboard/overview/",
-            }
-        ],
-    },
-    {
-        title: "Event Management",
-        url: "/app/event/categories",
-        path: "/app/event",
-        icon: CalendarRange,
-        items: [
-            {
-                title: "Schedule Categories",
-                url: "/app/event/categories",
-            },
-            {
-                title: "Schedule",
-                url: "/app/event/schedules",
-            },
-            {
-                title: "Bookings",
-                url: "/app/event/booking",
-            },
-            {
-                title: "Reviews",
-                url: "#",
-            }
-        ],
-    },
-    {
-        title: "Content Management",
-        url: "/app/content/articles",
-        path: "/app/content",
-        icon: Newspaper,
-        items: [
-            {
-                title: "Articles",
-                url: "/app/content/articles",
-            },
-            {
-                title: "Gallery",
-                url: "/app/content/gallery",
-            },
-            {
-                title: "Hero Section",
-                url: "/app/content/hero",
-            },
-            {
-                title: "Social Links",
-                url: "/app/content/social",
-            },
-        ],
-    },
-    {
-        title: "Localization",
-        url: "/app/localization/translate",
-        path: "/app/localization",
-        icon: Globe,
-        items: [
-            {
-                title: "Translations",
-                url: "/app/localization/translate",
-            },
-        ],
-    },
-    {
-        title: "Settings",
-        url: "/app/setting/app/",
-        path: "/app/setting",
-        icon: Cog,
-        items: [
-            {
-                title: "Landing Settings",
-                url: "/app/setting/app",
-            },
-            {
-                title: "Users",
-                url: "/app/setting/user",
-            },
-        ],
-    },
+  // Dashboard
+  {
+    title: "Overview",
+    url: "/app/dashboard/overview/",
+    path: "/app/dashboard",
+    icon: Command,
+    type: "all",
+  },
 
-]
+  // Event Management
+  {
+    title: "Schedule Categories",
+    url: "/app/event/categories",
+    path: "/app/event",
+    icon: Tags, // kategori
+    type: "event",
+  },
+  {
+    title: "Schedule",
+    url: "/app/event/schedules",
+    path: "/app/event",
+    icon: CalendarDays, // jadwal
+    type: "event",
+  },
+  {
+    title: "Bookings",
+    url: "/app/event/booking",
+    path: "/app/event",
+    icon: CalendarCheck, // booking
+    type: "event",
+  },
+  {
+    title: "Reviews",
+    url: "#",
+    path: "/app/event",
+    icon: MessageSquare, // review
+    type: "event",
+  },
+
+  // Content Management
+  {
+    title: "Articles",
+    url: "/app/content/articles",
+    path: "/app/content",
+    icon: Newspaper,
+    type: "content",
+  },
+  {
+    title: "Gallery",
+    url: "/app/content/gallery",
+    path: "/app/content",
+    icon: ImageIcon,
+    type: "content",
+  },
+  {
+    title: "Hero Section",
+    url: "/app/content/hero",
+    path: "/app/content",
+    icon: Monitor,
+    type: "content",
+  },
+  {
+    title: "Social Links",
+    url: "/app/content/social",
+    path: "/app/content",
+    icon: Link2,
+    type: "content",
+  },
+
+  // Localization
+  {
+    title: "Translations",
+    url: "/app/localization/translate",
+    path: "/app/localization",
+    icon: Globe,
+    type: "translation",
+  },
+
+  // Settings
+  {
+    title: "Landing Settings",
+    url: "/app/setting/app",
+    path: "/app/setting",
+    icon: Cog,
+    type: "website",
+  },
+  {
+    title: "Users",
+    url: "/app/setting/user",
+    path: "/app/setting",
+    icon: Users,
+    type: "website",
+  },
+];
 
 
 export const SUPER_ADMIN_MENU = [

@@ -14,11 +14,17 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AppRouteRouteImport } from './routes/app.route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSettingRouteRouteImport } from './routes/app.setting.route'
+import { Route as AppLocalizationRouteRouteImport } from './routes/app.localization.route'
+import { Route as AppEventRouteRouteImport } from './routes/app.event.route'
+import { Route as AppContentRouteRouteImport } from './routes/app.content.route'
+import { Route as AppAdminRouteRouteImport } from './routes/app.admin.route'
 import { Route as AppSettingIndexRouteImport } from './routes/app.setting.index'
 import { Route as AppLocalizationIndexRouteImport } from './routes/app.localization.index'
 import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
+import { Route as AppSettingCollabRouteImport } from './routes/app.setting.collab'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
 import { Route as AppAdminUserRouteImport } from './routes/app.admin.user'
@@ -66,20 +72,45 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppSettingIndexRoute = AppSettingIndexRouteImport.update({
-  id: '/setting/',
-  path: '/setting/',
+const AppSettingRouteRoute = AppSettingRouteRouteImport.update({
+  id: '/setting',
+  path: '/setting',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const AppLocalizationRouteRoute = AppLocalizationRouteRouteImport.update({
+  id: '/localization',
+  path: '/localization',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppEventRouteRoute = AppEventRouteRouteImport.update({
+  id: '/event',
+  path: '/event',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppContentRouteRoute = AppContentRouteRouteImport.update({
+  id: '/content',
+  path: '/content',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminRouteRoute = AppAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingIndexRoute = AppSettingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppSettingRouteRoute,
 } as any)
 const AppLocalizationIndexRoute = AppLocalizationIndexRouteImport.update({
-  id: '/localization/',
-  path: '/localization/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppLocalizationRouteRoute,
 } as any)
 const AppEventIndexRoute = AppEventIndexRouteImport.update({
-  id: '/event/',
-  path: '/event/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   id: '/dashboard/',
@@ -87,9 +118,14 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppContentIndexRoute = AppContentIndexRouteImport.update({
-  id: '/content/',
-  path: '/content/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppContentRouteRoute,
+} as any)
+const AppSettingCollabRoute = AppSettingCollabRouteImport.update({
+  id: '/collab',
+  path: '/collab',
+  getParentRoute: () => AppSettingRouteRoute,
 } as any)
 const AppDashboardUserRoute = AppDashboardUserRouteImport.update({
   id: '/dashboard/user',
@@ -102,102 +138,102 @@ const AppDashboardOverviewRoute = AppDashboardOverviewRouteImport.update({
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppAdminUserRoute = AppAdminUserRouteImport.update({
-  id: '/admin/user',
-  path: '/admin/user',
-  getParentRoute: () => AppRouteRoute,
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppAdminTenantUserRoute = AppAdminTenantUserRouteImport.update({
-  id: '/admin/tenant-user',
-  path: '/admin/tenant-user',
-  getParentRoute: () => AppRouteRoute,
+  id: '/tenant-user',
+  path: '/tenant-user',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppAdminTenantRoute = AppAdminTenantRouteImport.update({
-  id: '/admin/tenant',
-  path: '/admin/tenant',
-  getParentRoute: () => AppRouteRoute,
+  id: '/tenant',
+  path: '/tenant',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppAdminSchedulesRoute = AppAdminSchedulesRouteImport.update({
-  id: '/admin/schedules',
-  path: '/admin/schedules',
-  getParentRoute: () => AppRouteRoute,
+  id: '/schedules',
+  path: '/schedules',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppAdminCategoriesRoute = AppAdminCategoriesRouteImport.update({
-  id: '/admin/categories',
-  path: '/admin/categories',
-  getParentRoute: () => AppRouteRoute,
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppSettingUserIndexRoute = AppSettingUserIndexRouteImport.update({
-  id: '/setting/user/',
-  path: '/setting/user/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/user/',
+  path: '/user/',
+  getParentRoute: () => AppSettingRouteRoute,
 } as any)
 const AppSettingAppIndexRoute = AppSettingAppIndexRouteImport.update({
-  id: '/setting/app/',
-  path: '/setting/app/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/app/',
+  path: '/app/',
+  getParentRoute: () => AppSettingRouteRoute,
 } as any)
 const AppLocalizationTranslateIndexRoute =
   AppLocalizationTranslateIndexRouteImport.update({
-    id: '/localization/translate/',
-    path: '/localization/translate/',
-    getParentRoute: () => AppRouteRoute,
+    id: '/translate/',
+    path: '/translate/',
+    getParentRoute: () => AppLocalizationRouteRoute,
   } as any)
 const AppEventSchedulesIndexRoute = AppEventSchedulesIndexRouteImport.update({
-  id: '/event/schedules/',
-  path: '/event/schedules/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/schedules/',
+  path: '/schedules/',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppEventCategoriesIndexRoute = AppEventCategoriesIndexRouteImport.update({
-  id: '/event/categories/',
-  path: '/event/categories/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppEventBookingIndexRoute = AppEventBookingIndexRouteImport.update({
-  id: '/event/booking/',
-  path: '/event/booking/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/booking/',
+  path: '/booking/',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppContentSocialIndexRoute = AppContentSocialIndexRouteImport.update({
-  id: '/content/social/',
-  path: '/content/social/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/social/',
+  path: '/social/',
+  getParentRoute: () => AppContentRouteRoute,
 } as any)
 const AppContentHeroIndexRoute = AppContentHeroIndexRouteImport.update({
-  id: '/content/hero/',
-  path: '/content/hero/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/hero/',
+  path: '/hero/',
+  getParentRoute: () => AppContentRouteRoute,
 } as any)
 const AppContentGalleryIndexRoute = AppContentGalleryIndexRouteImport.update({
-  id: '/content/gallery/',
-  path: '/content/gallery/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/gallery/',
+  path: '/gallery/',
+  getParentRoute: () => AppContentRouteRoute,
 } as any)
 const AppContentArticlesIndexRoute = AppContentArticlesIndexRouteImport.update({
-  id: '/content/articles/',
-  path: '/content/articles/',
-  getParentRoute: () => AppRouteRoute,
+  id: '/articles/',
+  path: '/articles/',
+  getParentRoute: () => AppContentRouteRoute,
 } as any)
 const AppEventCategoriesNewRoute = AppEventCategoriesNewRouteImport.update({
-  id: '/event/categories/new',
-  path: '/event/categories/new',
-  getParentRoute: () => AppRouteRoute,
+  id: '/categories/new',
+  path: '/categories/new',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppContentArticleNewRoute = AppContentArticleNewRouteImport.update({
-  id: '/content/article/new',
-  path: '/content/article/new',
-  getParentRoute: () => AppRouteRoute,
+  id: '/article/new',
+  path: '/article/new',
+  getParentRoute: () => AppContentRouteRoute,
 } as any)
 const AppEventCategoriesUpdateCatIdRoute =
   AppEventCategoriesUpdateCatIdRouteImport.update({
-    id: '/event/categories/update/$catId',
-    path: '/event/categories/update/$catId',
-    getParentRoute: () => AppRouteRoute,
+    id: '/categories/update/$catId',
+    path: '/categories/update/$catId',
+    getParentRoute: () => AppEventRouteRoute,
   } as any)
 const AppContentArticleUpdateArIdRoute =
   AppContentArticleUpdateArIdRouteImport.update({
-    id: '/content/article/update/$arId',
-    path: '/content/article/update/$arId',
-    getParentRoute: () => AppRouteRoute,
+    id: '/article/update/$arId',
+    path: '/article/update/$arId',
+    getParentRoute: () => AppContentRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -205,6 +241,11 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
+  '/app/admin': typeof AppAdminRouteRouteWithChildren
+  '/app/content': typeof AppContentRouteRouteWithChildren
+  '/app/event': typeof AppEventRouteRouteWithChildren
+  '/app/localization': typeof AppLocalizationRouteRouteWithChildren
+  '/app/setting': typeof AppSettingRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
   '/app/admin/schedules': typeof AppAdminSchedulesRoute
@@ -213,11 +254,12 @@ export interface FileRoutesByFullPath {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
-  '/app/content': typeof AppContentIndexRoute
+  '/app/setting/collab': typeof AppSettingCollabRoute
+  '/app/content/': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/event': typeof AppEventIndexRoute
-  '/app/localization': typeof AppLocalizationIndexRoute
-  '/app/setting': typeof AppSettingIndexRoute
+  '/app/event/': typeof AppEventIndexRoute
+  '/app/localization/': typeof AppLocalizationIndexRoute
+  '/app/setting/': typeof AppSettingIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
@@ -237,6 +279,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
+  '/app/admin': typeof AppAdminRouteRouteWithChildren
   '/app': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
   '/app/admin/schedules': typeof AppAdminSchedulesRoute
@@ -245,6 +288,7 @@ export interface FileRoutesByTo {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/setting/collab': typeof AppSettingCollabRoute
   '/app/content': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
@@ -271,6 +315,11 @@ export interface FileRoutesById {
   '/app': typeof AppRouteRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
+  '/app/admin': typeof AppAdminRouteRouteWithChildren
+  '/app/content': typeof AppContentRouteRouteWithChildren
+  '/app/event': typeof AppEventRouteRouteWithChildren
+  '/app/localization': typeof AppLocalizationRouteRouteWithChildren
+  '/app/setting': typeof AppSettingRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
   '/app/admin/schedules': typeof AppAdminSchedulesRoute
@@ -279,6 +328,7 @@ export interface FileRoutesById {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/setting/collab': typeof AppSettingCollabRoute
   '/app/content/': typeof AppContentIndexRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
@@ -306,6 +356,11 @@ export interface FileRouteTypes {
     | '/app'
     | '/dashboard'
     | '/register'
+    | '/app/admin'
+    | '/app/content'
+    | '/app/event'
+    | '/app/localization'
+    | '/app/setting'
     | '/app/'
     | '/app/admin/categories'
     | '/app/admin/schedules'
@@ -314,11 +369,12 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
-    | '/app/content'
+    | '/app/setting/collab'
+    | '/app/content/'
     | '/app/dashboard'
-    | '/app/event'
-    | '/app/localization'
-    | '/app/setting'
+    | '/app/event/'
+    | '/app/localization/'
+    | '/app/setting/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles'
@@ -338,6 +394,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/register'
+    | '/app/admin'
     | '/app'
     | '/app/admin/categories'
     | '/app/admin/schedules'
@@ -346,6 +403,7 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/setting/collab'
     | '/app/content'
     | '/app/dashboard'
     | '/app/event'
@@ -371,6 +429,11 @@ export interface FileRouteTypes {
     | '/app'
     | '/dashboard'
     | '/register'
+    | '/app/admin'
+    | '/app/content'
+    | '/app/event'
+    | '/app/localization'
+    | '/app/setting'
     | '/app/'
     | '/app/admin/categories'
     | '/app/admin/schedules'
@@ -379,6 +442,7 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/setting/collab'
     | '/app/content/'
     | '/app/dashboard/'
     | '/app/event/'
@@ -444,26 +508,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/app/setting/': {
-      id: '/app/setting/'
+    '/app/setting': {
+      id: '/app/setting'
       path: '/setting'
       fullPath: '/app/setting'
-      preLoaderRoute: typeof AppSettingIndexRouteImport
+      preLoaderRoute: typeof AppSettingRouteRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/app/localization': {
+      id: '/app/localization'
+      path: '/localization'
+      fullPath: '/app/localization'
+      preLoaderRoute: typeof AppLocalizationRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/event': {
+      id: '/app/event'
+      path: '/event'
+      fullPath: '/app/event'
+      preLoaderRoute: typeof AppEventRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/content': {
+      id: '/app/content'
+      path: '/content'
+      fullPath: '/app/content'
+      preLoaderRoute: typeof AppContentRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/admin': {
+      id: '/app/admin'
+      path: '/admin'
+      fullPath: '/app/admin'
+      preLoaderRoute: typeof AppAdminRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/setting/': {
+      id: '/app/setting/'
+      path: '/'
+      fullPath: '/app/setting/'
+      preLoaderRoute: typeof AppSettingIndexRouteImport
+      parentRoute: typeof AppSettingRouteRoute
     }
     '/app/localization/': {
       id: '/app/localization/'
-      path: '/localization'
-      fullPath: '/app/localization'
+      path: '/'
+      fullPath: '/app/localization/'
       preLoaderRoute: typeof AppLocalizationIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppLocalizationRouteRoute
     }
     '/app/event/': {
       id: '/app/event/'
-      path: '/event'
-      fullPath: '/app/event'
+      path: '/'
+      fullPath: '/app/event/'
       preLoaderRoute: typeof AppEventIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/dashboard/': {
       id: '/app/dashboard/'
@@ -474,10 +573,17 @@ declare module '@tanstack/react-router' {
     }
     '/app/content/': {
       id: '/app/content/'
-      path: '/content'
-      fullPath: '/app/content'
+      path: '/'
+      fullPath: '/app/content/'
       preLoaderRoute: typeof AppContentIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
+    }
+    '/app/setting/collab': {
+      id: '/app/setting/collab'
+      path: '/collab'
+      fullPath: '/app/setting/collab'
+      preLoaderRoute: typeof AppSettingCollabRouteImport
+      parentRoute: typeof AppSettingRouteRoute
     }
     '/app/dashboard/user': {
       id: '/app/dashboard/user'
@@ -495,198 +601,259 @@ declare module '@tanstack/react-router' {
     }
     '/app/admin/user': {
       id: '/app/admin/user'
-      path: '/admin/user'
+      path: '/user'
       fullPath: '/app/admin/user'
       preLoaderRoute: typeof AppAdminUserRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/app/admin/tenant-user': {
       id: '/app/admin/tenant-user'
-      path: '/admin/tenant-user'
+      path: '/tenant-user'
       fullPath: '/app/admin/tenant-user'
       preLoaderRoute: typeof AppAdminTenantUserRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/app/admin/tenant': {
       id: '/app/admin/tenant'
-      path: '/admin/tenant'
+      path: '/tenant'
       fullPath: '/app/admin/tenant'
       preLoaderRoute: typeof AppAdminTenantRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/app/admin/schedules': {
       id: '/app/admin/schedules'
-      path: '/admin/schedules'
+      path: '/schedules'
       fullPath: '/app/admin/schedules'
       preLoaderRoute: typeof AppAdminSchedulesRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/app/admin/categories': {
       id: '/app/admin/categories'
-      path: '/admin/categories'
+      path: '/categories'
       fullPath: '/app/admin/categories'
       preLoaderRoute: typeof AppAdminCategoriesRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/app/setting/user/': {
       id: '/app/setting/user/'
-      path: '/setting/user'
+      path: '/user'
       fullPath: '/app/setting/user'
       preLoaderRoute: typeof AppSettingUserIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppSettingRouteRoute
     }
     '/app/setting/app/': {
       id: '/app/setting/app/'
-      path: '/setting/app'
+      path: '/app'
       fullPath: '/app/setting/app'
       preLoaderRoute: typeof AppSettingAppIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppSettingRouteRoute
     }
     '/app/localization/translate/': {
       id: '/app/localization/translate/'
-      path: '/localization/translate'
+      path: '/translate'
       fullPath: '/app/localization/translate'
       preLoaderRoute: typeof AppLocalizationTranslateIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppLocalizationRouteRoute
     }
     '/app/event/schedules/': {
       id: '/app/event/schedules/'
-      path: '/event/schedules'
+      path: '/schedules'
       fullPath: '/app/event/schedules'
       preLoaderRoute: typeof AppEventSchedulesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/event/categories/': {
       id: '/app/event/categories/'
-      path: '/event/categories'
+      path: '/categories'
       fullPath: '/app/event/categories'
       preLoaderRoute: typeof AppEventCategoriesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/event/booking/': {
       id: '/app/event/booking/'
-      path: '/event/booking'
+      path: '/booking'
       fullPath: '/app/event/booking'
       preLoaderRoute: typeof AppEventBookingIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/content/social/': {
       id: '/app/content/social/'
-      path: '/content/social'
+      path: '/social'
       fullPath: '/app/content/social'
       preLoaderRoute: typeof AppContentSocialIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
     '/app/content/hero/': {
       id: '/app/content/hero/'
-      path: '/content/hero'
+      path: '/hero'
       fullPath: '/app/content/hero'
       preLoaderRoute: typeof AppContentHeroIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
     '/app/content/gallery/': {
       id: '/app/content/gallery/'
-      path: '/content/gallery'
+      path: '/gallery'
       fullPath: '/app/content/gallery'
       preLoaderRoute: typeof AppContentGalleryIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
     '/app/content/articles/': {
       id: '/app/content/articles/'
-      path: '/content/articles'
+      path: '/articles'
       fullPath: '/app/content/articles'
       preLoaderRoute: typeof AppContentArticlesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
     '/app/event/categories/new': {
       id: '/app/event/categories/new'
-      path: '/event/categories/new'
+      path: '/categories/new'
       fullPath: '/app/event/categories/new'
       preLoaderRoute: typeof AppEventCategoriesNewRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/content/article/new': {
       id: '/app/content/article/new'
-      path: '/content/article/new'
+      path: '/article/new'
       fullPath: '/app/content/article/new'
       preLoaderRoute: typeof AppContentArticleNewRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
     '/app/event/categories/update/$catId': {
       id: '/app/event/categories/update/$catId'
-      path: '/event/categories/update/$catId'
+      path: '/categories/update/$catId'
       fullPath: '/app/event/categories/update/$catId'
       preLoaderRoute: typeof AppEventCategoriesUpdateCatIdRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/content/article/update/$arId': {
       id: '/app/content/article/update/$arId'
-      path: '/content/article/update/$arId'
+      path: '/article/update/$arId'
       fullPath: '/app/content/article/update/$arId'
       preLoaderRoute: typeof AppContentArticleUpdateArIdRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppContentRouteRoute
     }
   }
 }
 
-interface AppRouteRouteChildren {
-  AppIndexRoute: typeof AppIndexRoute
+interface AppAdminRouteRouteChildren {
   AppAdminCategoriesRoute: typeof AppAdminCategoriesRoute
   AppAdminSchedulesRoute: typeof AppAdminSchedulesRoute
   AppAdminTenantRoute: typeof AppAdminTenantRoute
   AppAdminTenantUserRoute: typeof AppAdminTenantUserRoute
   AppAdminUserRoute: typeof AppAdminUserRoute
-  AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
-  AppDashboardUserRoute: typeof AppDashboardUserRoute
-  AppContentIndexRoute: typeof AppContentIndexRoute
-  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
-  AppEventIndexRoute: typeof AppEventIndexRoute
-  AppLocalizationIndexRoute: typeof AppLocalizationIndexRoute
-  AppSettingIndexRoute: typeof AppSettingIndexRoute
-  AppContentArticleNewRoute: typeof AppContentArticleNewRoute
-  AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
-  AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
-  AppContentGalleryIndexRoute: typeof AppContentGalleryIndexRoute
-  AppContentHeroIndexRoute: typeof AppContentHeroIndexRoute
-  AppContentSocialIndexRoute: typeof AppContentSocialIndexRoute
-  AppEventBookingIndexRoute: typeof AppEventBookingIndexRoute
-  AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
-  AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
-  AppLocalizationTranslateIndexRoute: typeof AppLocalizationTranslateIndexRoute
-  AppSettingAppIndexRoute: typeof AppSettingAppIndexRoute
-  AppSettingUserIndexRoute: typeof AppSettingUserIndexRoute
-  AppContentArticleUpdateArIdRoute: typeof AppContentArticleUpdateArIdRoute
-  AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
 }
 
-const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppIndexRoute: AppIndexRoute,
+const AppAdminRouteRouteChildren: AppAdminRouteRouteChildren = {
   AppAdminCategoriesRoute: AppAdminCategoriesRoute,
   AppAdminSchedulesRoute: AppAdminSchedulesRoute,
   AppAdminTenantRoute: AppAdminTenantRoute,
   AppAdminTenantUserRoute: AppAdminTenantUserRoute,
   AppAdminUserRoute: AppAdminUserRoute,
-  AppDashboardOverviewRoute: AppDashboardOverviewRoute,
-  AppDashboardUserRoute: AppDashboardUserRoute,
+}
+
+const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
+  AppAdminRouteRouteChildren,
+)
+
+interface AppContentRouteRouteChildren {
+  AppContentIndexRoute: typeof AppContentIndexRoute
+  AppContentArticleNewRoute: typeof AppContentArticleNewRoute
+  AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
+  AppContentGalleryIndexRoute: typeof AppContentGalleryIndexRoute
+  AppContentHeroIndexRoute: typeof AppContentHeroIndexRoute
+  AppContentSocialIndexRoute: typeof AppContentSocialIndexRoute
+  AppContentArticleUpdateArIdRoute: typeof AppContentArticleUpdateArIdRoute
+}
+
+const AppContentRouteRouteChildren: AppContentRouteRouteChildren = {
   AppContentIndexRoute: AppContentIndexRoute,
-  AppDashboardIndexRoute: AppDashboardIndexRoute,
-  AppEventIndexRoute: AppEventIndexRoute,
-  AppLocalizationIndexRoute: AppLocalizationIndexRoute,
-  AppSettingIndexRoute: AppSettingIndexRoute,
   AppContentArticleNewRoute: AppContentArticleNewRoute,
-  AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppContentArticlesIndexRoute: AppContentArticlesIndexRoute,
   AppContentGalleryIndexRoute: AppContentGalleryIndexRoute,
   AppContentHeroIndexRoute: AppContentHeroIndexRoute,
   AppContentSocialIndexRoute: AppContentSocialIndexRoute,
+  AppContentArticleUpdateArIdRoute: AppContentArticleUpdateArIdRoute,
+}
+
+const AppContentRouteRouteWithChildren = AppContentRouteRoute._addFileChildren(
+  AppContentRouteRouteChildren,
+)
+
+interface AppEventRouteRouteChildren {
+  AppEventIndexRoute: typeof AppEventIndexRoute
+  AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
+  AppEventBookingIndexRoute: typeof AppEventBookingIndexRoute
+  AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
+  AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
+  AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
+}
+
+const AppEventRouteRouteChildren: AppEventRouteRouteChildren = {
+  AppEventIndexRoute: AppEventIndexRoute,
+  AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppEventBookingIndexRoute: AppEventBookingIndexRoute,
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
   AppEventSchedulesIndexRoute: AppEventSchedulesIndexRoute,
+  AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
+}
+
+const AppEventRouteRouteWithChildren = AppEventRouteRoute._addFileChildren(
+  AppEventRouteRouteChildren,
+)
+
+interface AppLocalizationRouteRouteChildren {
+  AppLocalizationIndexRoute: typeof AppLocalizationIndexRoute
+  AppLocalizationTranslateIndexRoute: typeof AppLocalizationTranslateIndexRoute
+}
+
+const AppLocalizationRouteRouteChildren: AppLocalizationRouteRouteChildren = {
+  AppLocalizationIndexRoute: AppLocalizationIndexRoute,
   AppLocalizationTranslateIndexRoute: AppLocalizationTranslateIndexRoute,
+}
+
+const AppLocalizationRouteRouteWithChildren =
+  AppLocalizationRouteRoute._addFileChildren(AppLocalizationRouteRouteChildren)
+
+interface AppSettingRouteRouteChildren {
+  AppSettingCollabRoute: typeof AppSettingCollabRoute
+  AppSettingIndexRoute: typeof AppSettingIndexRoute
+  AppSettingAppIndexRoute: typeof AppSettingAppIndexRoute
+  AppSettingUserIndexRoute: typeof AppSettingUserIndexRoute
+}
+
+const AppSettingRouteRouteChildren: AppSettingRouteRouteChildren = {
+  AppSettingCollabRoute: AppSettingCollabRoute,
+  AppSettingIndexRoute: AppSettingIndexRoute,
   AppSettingAppIndexRoute: AppSettingAppIndexRoute,
   AppSettingUserIndexRoute: AppSettingUserIndexRoute,
-  AppContentArticleUpdateArIdRoute: AppContentArticleUpdateArIdRoute,
-  AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
+}
+
+const AppSettingRouteRouteWithChildren = AppSettingRouteRoute._addFileChildren(
+  AppSettingRouteRouteChildren,
+)
+
+interface AppRouteRouteChildren {
+  AppAdminRouteRoute: typeof AppAdminRouteRouteWithChildren
+  AppContentRouteRoute: typeof AppContentRouteRouteWithChildren
+  AppEventRouteRoute: typeof AppEventRouteRouteWithChildren
+  AppLocalizationRouteRoute: typeof AppLocalizationRouteRouteWithChildren
+  AppSettingRouteRoute: typeof AppSettingRouteRouteWithChildren
+  AppIndexRoute: typeof AppIndexRoute
+  AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
+  AppDashboardUserRoute: typeof AppDashboardUserRoute
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppAdminRouteRoute: AppAdminRouteRouteWithChildren,
+  AppContentRouteRoute: AppContentRouteRouteWithChildren,
+  AppEventRouteRoute: AppEventRouteRouteWithChildren,
+  AppLocalizationRouteRoute: AppLocalizationRouteRouteWithChildren,
+  AppSettingRouteRoute: AppSettingRouteRouteWithChildren,
+  AppIndexRoute: AppIndexRoute,
+  AppDashboardOverviewRoute: AppDashboardOverviewRoute,
+  AppDashboardUserRoute: AppDashboardUserRoute,
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

@@ -29,7 +29,7 @@ import { APP_VERSION } from "@/constants/config"
 export default function FirstApp() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
-    const { user, token, fetchUser, logout } = Route.useRouteContext().authStore.getState();
+    const { user, token, fetchUser, logout, menu } = Route.useRouteContext().authStore.getState();
 
     const loggingOut = () => {
         logout()
@@ -153,9 +153,10 @@ export default function FirstApp() {
 
             <main className="flex-1 flex flex-col items-center justify-center p-6 -mt-16">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-12 gap-y-12">
-                    {SERVICE_ITEM.map((item: ItemInterface) => (
+                    {SERVICE_ITEM.filter((m) => menu.includes(m.type)).map((item: ItemInterface) => (
                         <Link
                             to={item.location}
+                            
                             className="group flex flex-col items-center gap-4 outline-none"
                         >
                             <div className={`w-[100px] h-[100px] ${item.class} rounded-[24px] shadow-2xl shadow-orange-900/30 flex items-center justify-center text-white group-hover:scale-105 group-hover:shadow-orange-500/40 group-focus:ring-4 ring-orange-500/30 transition-all duration-300 relative border-t border-white/20`}>
