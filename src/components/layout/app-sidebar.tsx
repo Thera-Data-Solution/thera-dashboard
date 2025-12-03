@@ -4,7 +4,7 @@ import * as React from "react"
 import {
   LifeBuoy,
   MoveLeft,
-  Send,
+  Send
 } from "lucide-react"
 
 import { NavMain } from ".//nav-main"
@@ -20,10 +20,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { SUPER_ADMIN_MENU } from "@/constants/menu"
+import { DEFAULT_MENU, SUPER_ADMIN_MENU } from "@/constants/menu"
 import useAuthStore from "@/store/authStore"
-import { useActiveMenu } from "@/lib/activeMenu"
-import { Link } from "@tanstack/react-router"
+import { Link, useRouterState } from "@tanstack/react-router"
+import { getParentPath } from "@/lib/cuteMenu"
 
 const data = {
   navSecondary: [
@@ -42,9 +42,15 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useAuthStore((state) => state);
-  const x = useActiveMenu();
-  const parents = x?.parent ? [x.parent] : [];
+  const { user, menu } = useAuthStore((state) => state);
+  const state = useRouterState();
+  const currentPath = state.location.pathname;
+  const parentPath = getParentPath(currentPath);
+  const filteredMenu = DEFAULT_MENU.filter((item) =>
+    (menu.includes(item.type) || item.type === "all") &&
+    item.path === parentPath
+  );
+
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -66,7 +72,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={parents} />
+        {
+          parentPath !== "/app/admin" && (
+            <NavMain items={filteredMenu} />
+          )
+        }
         {user && user.role === 'SU' && (
           <NavProjects projects={SUPER_ADMIN_MENU} />
         )}
