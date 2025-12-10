@@ -14,16 +14,20 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AppRouteRouteImport } from './routes/app.route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSystemRouteRouteImport } from './routes/app.system.route'
 import { Route as AppSettingRouteRouteImport } from './routes/app.setting.route'
 import { Route as AppLocalizationRouteRouteImport } from './routes/app.localization.route'
 import { Route as AppEventRouteRouteImport } from './routes/app.event.route'
 import { Route as AppContentRouteRouteImport } from './routes/app.content.route'
 import { Route as AppAdminRouteRouteImport } from './routes/app.admin.route'
+import { Route as AppSystemIndexRouteImport } from './routes/app.system.index'
 import { Route as AppSettingIndexRouteImport } from './routes/app.setting.index'
 import { Route as AppLocalizationIndexRouteImport } from './routes/app.localization.index'
 import { Route as AppEventIndexRouteImport } from './routes/app.event.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/app.dashboard.index'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
+import { Route as AppSystemUserRouteImport } from './routes/app.system.user'
+import { Route as AppSettingPartnerRouteImport } from './routes/app.setting.partner'
 import { Route as AppSettingCollabRouteImport } from './routes/app.setting.collab'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
@@ -72,6 +76,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppSystemRouteRoute = AppSystemRouteRouteImport.update({
+  id: '/system',
+  path: '/system',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppSettingRouteRoute = AppSettingRouteRouteImport.update({
   id: '/setting',
   path: '/setting',
@@ -97,6 +106,11 @@ const AppAdminRouteRoute = AppAdminRouteRouteImport.update({
   path: '/admin',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppSystemIndexRoute = AppSystemIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppSystemRouteRoute,
+} as any)
 const AppSettingIndexRoute = AppSettingIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -121,6 +135,16 @@ const AppContentIndexRoute = AppContentIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppContentRouteRoute,
+} as any)
+const AppSystemUserRoute = AppSystemUserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => AppSystemRouteRoute,
+} as any)
+const AppSettingPartnerRoute = AppSettingPartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
+  getParentRoute: () => AppSettingRouteRoute,
 } as any)
 const AppSettingCollabRoute = AppSettingCollabRouteImport.update({
   id: '/collab',
@@ -246,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/app/event': typeof AppEventRouteRouteWithChildren
   '/app/localization': typeof AppLocalizationRouteRouteWithChildren
   '/app/setting': typeof AppSettingRouteRouteWithChildren
+  '/app/system': typeof AppSystemRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
   '/app/admin/schedules': typeof AppAdminSchedulesRoute
@@ -255,11 +280,14 @@ export interface FileRoutesByFullPath {
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
+  '/app/setting/partner': typeof AppSettingPartnerRoute
+  '/app/system/user': typeof AppSystemUserRoute
   '/app/content/': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
   '/app/localization/': typeof AppLocalizationIndexRoute
   '/app/setting/': typeof AppSettingIndexRoute
+  '/app/system/': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
@@ -289,11 +317,14 @@ export interface FileRoutesByTo {
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
+  '/app/setting/partner': typeof AppSettingPartnerRoute
+  '/app/system/user': typeof AppSystemUserRoute
   '/app/content': typeof AppContentIndexRoute
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/event': typeof AppEventIndexRoute
   '/app/localization': typeof AppLocalizationIndexRoute
   '/app/setting': typeof AppSettingIndexRoute
+  '/app/system': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
@@ -320,6 +351,7 @@ export interface FileRoutesById {
   '/app/event': typeof AppEventRouteRouteWithChildren
   '/app/localization': typeof AppLocalizationRouteRouteWithChildren
   '/app/setting': typeof AppSettingRouteRouteWithChildren
+  '/app/system': typeof AppSystemRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/admin/categories': typeof AppAdminCategoriesRoute
   '/app/admin/schedules': typeof AppAdminSchedulesRoute
@@ -329,11 +361,14 @@ export interface FileRoutesById {
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
+  '/app/setting/partner': typeof AppSettingPartnerRoute
+  '/app/system/user': typeof AppSystemUserRoute
   '/app/content/': typeof AppContentIndexRoute
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/event/': typeof AppEventIndexRoute
   '/app/localization/': typeof AppLocalizationIndexRoute
   '/app/setting/': typeof AppSettingIndexRoute
+  '/app/system/': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
   '/app/content/articles/': typeof AppContentArticlesIndexRoute
@@ -361,6 +396,7 @@ export interface FileRouteTypes {
     | '/app/event'
     | '/app/localization'
     | '/app/setting'
+    | '/app/system'
     | '/app/'
     | '/app/admin/categories'
     | '/app/admin/schedules'
@@ -370,11 +406,14 @@ export interface FileRouteTypes {
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/setting/collab'
+    | '/app/setting/partner'
+    | '/app/system/user'
     | '/app/content/'
     | '/app/dashboard'
     | '/app/event/'
     | '/app/localization/'
     | '/app/setting/'
+    | '/app/system/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles'
@@ -404,11 +443,14 @@ export interface FileRouteTypes {
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/setting/collab'
+    | '/app/setting/partner'
+    | '/app/system/user'
     | '/app/content'
     | '/app/dashboard'
     | '/app/event'
     | '/app/localization'
     | '/app/setting'
+    | '/app/system'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles'
@@ -434,6 +476,7 @@ export interface FileRouteTypes {
     | '/app/event'
     | '/app/localization'
     | '/app/setting'
+    | '/app/system'
     | '/app/'
     | '/app/admin/categories'
     | '/app/admin/schedules'
@@ -443,11 +486,14 @@ export interface FileRouteTypes {
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
     | '/app/setting/collab'
+    | '/app/setting/partner'
+    | '/app/system/user'
     | '/app/content/'
     | '/app/dashboard/'
     | '/app/event/'
     | '/app/localization/'
     | '/app/setting/'
+    | '/app/system/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
     | '/app/content/articles/'
@@ -508,6 +554,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/system': {
+      id: '/app/system'
+      path: '/system'
+      fullPath: '/app/system'
+      preLoaderRoute: typeof AppSystemRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/setting': {
       id: '/app/setting'
       path: '/setting'
@@ -543,6 +596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/system/': {
+      id: '/app/system/'
+      path: '/'
+      fullPath: '/app/system/'
+      preLoaderRoute: typeof AppSystemIndexRouteImport
+      parentRoute: typeof AppSystemRouteRoute
+    }
     '/app/setting/': {
       id: '/app/setting/'
       path: '/'
@@ -577,6 +637,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/content/'
       preLoaderRoute: typeof AppContentIndexRouteImport
       parentRoute: typeof AppContentRouteRoute
+    }
+    '/app/system/user': {
+      id: '/app/system/user'
+      path: '/user'
+      fullPath: '/app/system/user'
+      preLoaderRoute: typeof AppSystemUserRouteImport
+      parentRoute: typeof AppSystemRouteRoute
+    }
+    '/app/setting/partner': {
+      id: '/app/setting/partner'
+      path: '/partner'
+      fullPath: '/app/setting/partner'
+      preLoaderRoute: typeof AppSettingPartnerRouteImport
+      parentRoute: typeof AppSettingRouteRoute
     }
     '/app/setting/collab': {
       id: '/app/setting/collab'
@@ -816,6 +890,7 @@ const AppLocalizationRouteRouteWithChildren =
 
 interface AppSettingRouteRouteChildren {
   AppSettingCollabRoute: typeof AppSettingCollabRoute
+  AppSettingPartnerRoute: typeof AppSettingPartnerRoute
   AppSettingIndexRoute: typeof AppSettingIndexRoute
   AppSettingAppIndexRoute: typeof AppSettingAppIndexRoute
   AppSettingUserIndexRoute: typeof AppSettingUserIndexRoute
@@ -823,6 +898,7 @@ interface AppSettingRouteRouteChildren {
 
 const AppSettingRouteRouteChildren: AppSettingRouteRouteChildren = {
   AppSettingCollabRoute: AppSettingCollabRoute,
+  AppSettingPartnerRoute: AppSettingPartnerRoute,
   AppSettingIndexRoute: AppSettingIndexRoute,
   AppSettingAppIndexRoute: AppSettingAppIndexRoute,
   AppSettingUserIndexRoute: AppSettingUserIndexRoute,
@@ -832,12 +908,27 @@ const AppSettingRouteRouteWithChildren = AppSettingRouteRoute._addFileChildren(
   AppSettingRouteRouteChildren,
 )
 
+interface AppSystemRouteRouteChildren {
+  AppSystemUserRoute: typeof AppSystemUserRoute
+  AppSystemIndexRoute: typeof AppSystemIndexRoute
+}
+
+const AppSystemRouteRouteChildren: AppSystemRouteRouteChildren = {
+  AppSystemUserRoute: AppSystemUserRoute,
+  AppSystemIndexRoute: AppSystemIndexRoute,
+}
+
+const AppSystemRouteRouteWithChildren = AppSystemRouteRoute._addFileChildren(
+  AppSystemRouteRouteChildren,
+)
+
 interface AppRouteRouteChildren {
   AppAdminRouteRoute: typeof AppAdminRouteRouteWithChildren
   AppContentRouteRoute: typeof AppContentRouteRouteWithChildren
   AppEventRouteRoute: typeof AppEventRouteRouteWithChildren
   AppLocalizationRouteRoute: typeof AppLocalizationRouteRouteWithChildren
   AppSettingRouteRoute: typeof AppSettingRouteRouteWithChildren
+  AppSystemRouteRoute: typeof AppSystemRouteRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
   AppDashboardOverviewRoute: typeof AppDashboardOverviewRoute
   AppDashboardUserRoute: typeof AppDashboardUserRoute
@@ -850,6 +941,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEventRouteRoute: AppEventRouteRouteWithChildren,
   AppLocalizationRouteRoute: AppLocalizationRouteRouteWithChildren,
   AppSettingRouteRoute: AppSettingRouteRouteWithChildren,
+  AppSystemRouteRoute: AppSystemRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
   AppDashboardOverviewRoute: AppDashboardOverviewRoute,
   AppDashboardUserRoute: AppDashboardUserRoute,

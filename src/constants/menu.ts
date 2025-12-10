@@ -108,12 +108,20 @@ export const DEFAULT_MENU = [
     type: "website",
   },
   {
-    title: "Users",
-    url: "/app/setting/user",
+    title: "Previous Collaborators",
+    url: "/app/setting/partner",
     path: "/app/setting",
-    icon: Users,
+    icon: LinkIcon,
     type: "website",
   },
+  // System Management
+  {
+    title: "User Management",
+    url: "/app/system/user",
+    path: "/app/system",
+    icon: Users,
+    type: "system",
+  }
 ];
 
 

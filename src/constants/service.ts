@@ -1,4 +1,4 @@
-import { BookUp, Cog, Globe, Newspaper, type LucideIcon } from "lucide-react";
+import { BookUp, Cog, Globe, Newspaper, Settings, type LucideIcon } from "lucide-react";
 
 export interface ItemInterface {
     location: string
@@ -35,5 +35,12 @@ export const SERVICE_ITEM = [
         class: "bg-gradient-to-br from-red-400 to-blue-600",
         label: "Web",
         type: "website"
+    },
+    {
+        location: "/app/system",
+        icon: Settings,
+        class: "bg-gradient-to-br from-gray-500 to-gray-700",
+        label: "System",
+        type: "system"
     }
 ]
