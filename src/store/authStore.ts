@@ -36,7 +36,7 @@ const useAuthStore = create<AuthState>()(
 
         try {
           const userData: User = await fetchMeApi(token);
-          set({ user: userData, isLoggedIn: true, menu: ["website", "content", "translation", "event"] });
+          set({ user: userData, isLoggedIn: true, menu: ["website", "content", "translation", "event", "system"] });
         } catch (error) {
           console.error("Gagal mengambil data pengguna:", error);
 
