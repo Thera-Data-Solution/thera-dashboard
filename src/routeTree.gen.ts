@@ -46,6 +46,7 @@ import { Route as AppContentSocialIndexRouteImport } from './routes/app.content.
 import { Route as AppContentHeroIndexRouteImport } from './routes/app.content.hero.index'
 import { Route as AppContentGalleryIndexRouteImport } from './routes/app.content.gallery.index'
 import { Route as AppContentArticlesIndexRouteImport } from './routes/app.content.articles.index'
+import { Route as AppContentArticleIndexRouteImport } from './routes/app.content.article.index'
 import { Route as AppEventCategoriesNewRouteImport } from './routes/app.event.categories.new'
 import { Route as AppContentArticleNewRouteImport } from './routes/app.content.article.new'
 import { Route as AppEventCategoriesUpdateCatIdRouteImport } from './routes/app.event.categories.update.$catId'
@@ -237,6 +238,11 @@ const AppContentArticlesIndexRoute = AppContentArticlesIndexRouteImport.update({
   path: '/articles/',
   getParentRoute: () => AppContentRouteRoute,
 } as any)
+const AppContentArticleIndexRoute = AppContentArticleIndexRouteImport.update({
+  id: '/article/',
+  path: '/article/',
+  getParentRoute: () => AppContentRouteRoute,
+} as any)
 const AppEventCategoriesNewRoute = AppEventCategoriesNewRouteImport.update({
   id: '/categories/new',
   path: '/categories/new',
@@ -290,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/app/system/': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/article': typeof AppContentArticleIndexRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
   '/app/content/gallery': typeof AppContentGalleryIndexRoute
   '/app/content/hero': typeof AppContentHeroIndexRoute
@@ -327,6 +334,7 @@ export interface FileRoutesByTo {
   '/app/system': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/article': typeof AppContentArticleIndexRoute
   '/app/content/articles': typeof AppContentArticlesIndexRoute
   '/app/content/gallery': typeof AppContentGalleryIndexRoute
   '/app/content/hero': typeof AppContentHeroIndexRoute
@@ -371,6 +379,7 @@ export interface FileRoutesById {
   '/app/system/': typeof AppSystemIndexRoute
   '/app/content/article/new': typeof AppContentArticleNewRoute
   '/app/event/categories/new': typeof AppEventCategoriesNewRoute
+  '/app/content/article/': typeof AppContentArticleIndexRoute
   '/app/content/articles/': typeof AppContentArticlesIndexRoute
   '/app/content/gallery/': typeof AppContentGalleryIndexRoute
   '/app/content/hero/': typeof AppContentHeroIndexRoute
@@ -416,6 +425,7 @@ export interface FileRouteTypes {
     | '/app/system/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/article'
     | '/app/content/articles'
     | '/app/content/gallery'
     | '/app/content/hero'
@@ -453,6 +463,7 @@ export interface FileRouteTypes {
     | '/app/system'
     | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/article'
     | '/app/content/articles'
     | '/app/content/gallery'
     | '/app/content/hero'
@@ -496,6 +507,7 @@ export interface FileRouteTypes {
     | '/app/system/'
     | '/app/content/article/new'
     | '/app/event/categories/new'
+    | '/app/content/article/'
     | '/app/content/articles/'
     | '/app/content/gallery/'
     | '/app/content/hero/'
@@ -778,6 +790,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContentArticlesIndexRouteImport
       parentRoute: typeof AppContentRouteRoute
     }
+    '/app/content/article/': {
+      id: '/app/content/article/'
+      path: '/article'
+      fullPath: '/app/content/article'
+      preLoaderRoute: typeof AppContentArticleIndexRouteImport
+      parentRoute: typeof AppContentRouteRoute
+    }
     '/app/event/categories/new': {
       id: '/app/event/categories/new'
       path: '/categories/new'
@@ -832,6 +851,7 @@ const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
 interface AppContentRouteRouteChildren {
   AppContentIndexRoute: typeof AppContentIndexRoute
   AppContentArticleNewRoute: typeof AppContentArticleNewRoute
+  AppContentArticleIndexRoute: typeof AppContentArticleIndexRoute
   AppContentArticlesIndexRoute: typeof AppContentArticlesIndexRoute
   AppContentGalleryIndexRoute: typeof AppContentGalleryIndexRoute
   AppContentHeroIndexRoute: typeof AppContentHeroIndexRoute
@@ -842,6 +862,7 @@ interface AppContentRouteRouteChildren {
 const AppContentRouteRouteChildren: AppContentRouteRouteChildren = {
   AppContentIndexRoute: AppContentIndexRoute,
   AppContentArticleNewRoute: AppContentArticleNewRoute,
+  AppContentArticleIndexRoute: AppContentArticleIndexRoute,
   AppContentArticlesIndexRoute: AppContentArticlesIndexRoute,
   AppContentGalleryIndexRoute: AppContentGalleryIndexRoute,
   AppContentHeroIndexRoute: AppContentHeroIndexRoute,
