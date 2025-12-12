@@ -1,7 +1,17 @@
 import { authApi } from ".";
 
-export async function getArticles() {
-    const res = await authApi.get("/articles");
+export type GetArticlesParams = {
+    page?: number;
+    pageSize?: number;
+};
+
+
+export async function getArticles(params: GetArticlesParams) {
+    const stringParams = Object.fromEntries(
+        Object.entries(params).map(([key, value]) => [key, String(value)])
+    );
+    const searchParams = new URLSearchParams(stringParams);
+    const res = await authApi.get(`/articles?${searchParams}`);
     return res.data;
 }
 

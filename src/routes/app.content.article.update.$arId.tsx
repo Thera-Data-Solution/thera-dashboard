@@ -1,4 +1,5 @@
 import { getArticleById, updateArticle } from '@/api/articles';
+import { EmptyDemo } from '@/components/emptyScreen';
 import { PostForm } from '@/components/form/post-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
@@ -17,7 +18,7 @@ function RouteComponent() {
   const queryClient = Route.useRouteContext().queryClient
   const navigate = Route.useNavigate()
   const { arId } = Route.useParams()
-  
+
   const { data: post, isFetching } = useQuery({
     queryKey: ["article", arId],
     queryFn: () => getArticleById(arId),
@@ -35,6 +36,10 @@ function RouteComponent() {
       })
       navigate({
         to: '/app/content/articles',
+        search: {
+          page: 1,
+          pageSize: 6
+        },
         replace: true
       })
     },
@@ -49,13 +54,16 @@ function RouteComponent() {
 
   // Kondisi render aman → setelah semua hooks
   if (isFetching) return <div>Loading...</div>
-  if (!post) return <div>No data</div>
+  if (!post) return (
+    <EmptyDemo title='Article' url='/app/content/article/new' />
+  )
 
   return (
     <PostForm
       defaultValues={{
         title: post.title,
         slug: post.slug,
+        articleType: post?.articleType || "BLOG",
         excerpt: post.excerpt || "",
         isPublished: post.isPublished,
         body: JSON.parse(post.body) || [],

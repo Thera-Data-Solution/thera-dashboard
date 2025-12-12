@@ -19,7 +19,11 @@ function RouteComponent() {
       toast.success("Berhasil")
       navigate({
         to: '/app/content/articles',
-        replace: true
+        replace: true,
+        search: {
+          page: 1,
+          pageSize: 6
+        }
       })
       queryClient.invalidateQueries({
         queryKey: ["articles"]

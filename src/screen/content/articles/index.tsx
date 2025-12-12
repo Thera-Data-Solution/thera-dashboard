@@ -63,7 +63,7 @@ export default function ArticleClient({data}: { data: IArticle[] }) {
                 return (
                     <div>
                         <Button
-                            onClick={() => router({to: "/app/content/article/update/$arId", params: {arId: row.id}})}>
+                            onClick={() => router({to: "/app/content/article/update/$arId", params: {arId: row.original.id}})}>
                             Edit
                         </Button>
                     </div>

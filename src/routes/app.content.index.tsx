@@ -5,6 +5,10 @@ export const Route = createFileRoute('/app/content/')({
    loader: () => {
       throw redirect({
         to: "/app/content/articles",
+        search: {
+          page: 1,
+          pageSize: 6
+        }
       });
     }
 })
