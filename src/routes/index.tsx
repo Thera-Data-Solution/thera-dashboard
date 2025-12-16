@@ -20,6 +20,13 @@ export const Route = createFileRoute('/')({
         }
     },
     component: LoginPage,
+    head: () => ({
+        meta: [
+            {
+                title: "Login | App Thera"
+            }
+        ]
+    })
 });
 
 function LoginPage() {

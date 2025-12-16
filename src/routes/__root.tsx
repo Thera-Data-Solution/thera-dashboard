@@ -1,7 +1,7 @@
 import { LoadScreen } from '@/components/loadingScreen';
 import type useAuthStore from '@/store/authStore';
 import type { QueryClient } from '@tanstack/react-query';
-import { createRootRouteWithContext, Outlet, useRouterState } from '@tanstack/react-router'
+import { createRootRouteWithContext, HeadContent, Outlet, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -42,6 +42,7 @@ function GlobalLoading() {
 
 const RootLayout = () => (
   <div>
+    <HeadContent/>
     <Outlet />
       <GlobalLoading />
     <TanStackRouterDevtools />

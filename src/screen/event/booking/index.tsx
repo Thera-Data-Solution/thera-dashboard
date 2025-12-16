@@ -211,6 +211,41 @@ export default function BookingPage({ data }: { data: IBooking[] }) {
                 },
             },
             {
+                header: "Custom Answer",
+                accessorKey: "customAnswer",
+                cell: ({ row }) => {
+                    const answers = row.original.customAnswers
+
+                    if (!answers || answers.length === 0) {
+                        return (
+                            <span className="text-xs text-muted-foreground italic">
+                                -
+                            </span>
+                        )
+                    }
+
+                    return (
+                        <div className="space-y-1 max-w-[260px]">
+                            {answers.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className="text-xs leading-snug"
+                                >
+                                    <span className="font-medium">
+                                        {item.label}:
+                                    </span>{" "}
+                                    <span className="text-muted-foreground">
+                                        {item.value || "-"}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                },
+            },
+
+
+            {
                 header: "Aksi",
                 accessorKey: "id",
                 cell: ({ row }) => (
@@ -259,7 +294,9 @@ export default function BookingPage({ data }: { data: IBooking[] }) {
                     ))}
                 </div>
             ) : (
-                <BookingTable columns={columns} data={data} />
+                <div className="min-h-full">
+                    <BookingTable columns={columns} data={data} />
+                </div>
             )}
         </div>
     )

@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "sonner"; // Impor toast
+import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "@tanstack/react-router";
@@ -23,7 +23,6 @@ import { useMutation } from "@tanstack/react-query";
 import { updateCategory } from "@/api/categories";
 import { Route } from "@/routes/app.event.categories.update.$catId";
 
-// --- Fungsi Format Harga ---
 const formatPrice = (value: number | string) => {
     if (value === 0 || value === "" || value === undefined) {
         return "";
@@ -41,8 +40,14 @@ const formatPrice = (value: number | string) => {
 
 export default function CategoryUpdate({ category }: { category: ICategory }) {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    // Hapus state isSubmitting, ganti dengan mutatiation.isPending
     const navigate = useNavigate()
+    type CustomCategoryField = {
+        label: string
+        type: "text"
+    }
+
+    const [customCategories, setCustomCategories] = useState<CustomCategoryField[]>([])
+
     const queryClient = Route.useRouteContext().queryClient
 
     const form = useForm<z.infer<typeof CategoriesSchema>>({
@@ -66,15 +71,12 @@ export default function CategoryUpdate({ category }: { category: ICategory }) {
 
     const [displayPrice, setDisplayPrice] = useState("");
 
-    // --- Efek untuk Harga dan Pratinjau Gambar ---
     useEffect(() => {
-        // Inisialisasi displayPrice
         const currentPrice = form.getValues("price");
         if (currentPrice > 0) {
             setDisplayPrice(formatPrice(currentPrice));
         }
 
-        // Cleanup function untuk URL pratinjau gambar
         return () => {
             if (imagePreview) {
                 URL.revokeObjectURL(imagePreview);
@@ -82,25 +84,24 @@ export default function CategoryUpdate({ category }: { category: ICategory }) {
         };
     }, [form, imagePreview]);
 
+    useEffect(() => {
+        if (category?.customFields && Array.isArray(category.customFields)) {
+            setCustomCategories(category.customFields)
+        }
+    }, [category])
 
-    // --- Mutasi Pembaruan Kategori ---
+
+
     const mutatiation = useMutation({
         mutationFn: (formData: FormData) => {
             return updateCategory(category.id, formData);
         },
         onSuccess: async () => {
-            toast.success("Category berhasil diperbarui!"); // Notifikasi Sukses
-            
+            toast.success("Category berhasil diperbarui!");
+
             await queryClient.invalidateQueries({ queryKey: ["categories"] });
             await queryClient.invalidateQueries({ queryKey: ["category", category.id] });
 
-            // Penggunaan router.invalidate() di TanStack Router yang tepat:
-            // Jika Anda hanya ingin re-run loader untuk rute yang sedang aktif.
-            // await router.invalidate(); 
-            
-            // Dalam kasus ini, navigasi mungkin sudah cukup, tetapi mari kita pastikan
-            // navigasi dilakukan setelah invalidation
-            
             navigate({
                 to: "/app/event/categories",
                 replace: true,
@@ -114,280 +115,96 @@ export default function CategoryUpdate({ category }: { category: ICategory }) {
         }
     })
 
-    const isSubmitting = mutatiation.isPending; // Gunakan status pending dari mutasi
+    const addCustomField = () => {
+        setCustomCategories((prev) => [
+            ...prev,
+            { label: "", type: "text" },
+        ])
+    }
+
+    const updateCustomField = (index: number, value: string) => {
+        setCustomCategories((prev) =>
+            prev.map((item, i) =>
+                i === index ? { ...item, label: value } : item
+            )
+        )
+    }
+
+    const removeCustomField = (index: number) => {
+        setCustomCategories((prev) => prev.filter((_, i) => i !== index))
+    }
+
+
+    const isSubmitting = mutatiation.isPending;
 
     async function onSubmit(values: z.infer<typeof CategoriesSchema>) {
         const formData = new FormData();
-        
-        // Mempersiapkan FormData
+
         Object.entries(values).forEach(([key, val]) => {
             if (key === "price" && (values.isFree || values.isPayAsYouWish)) {
-                // Harga disetel ke 0 jika gratis atau pay as you wish
                 formData.append(key, String(0));
             } else if (typeof val === "boolean" || typeof val === "number") {
                 formData.append(key, String(val));
             } else if (val instanceof File) {
-                // Hanya tambahkan file jika ada file baru yang dipilih
                 formData.append(key, val);
             } else if (typeof val === "string") {
                 formData.append(key, val);
             }
         });
-        
-        // Hapus penambahan 'slug' acak, karena ini biasanya harus diurus di backend
-        // atau jika harus di-generate di client, pastikan itu sesuai dengan schema dan API.
-        // Jika schema CategoriesSchema tidak memiliki 'slug', ini akan menyebabkan masalah.
-        // Saya asumsikan CategoriesSchema Anda sudah menangani field yang diperlukan.
-        // Jika 'slug' diperlukan dan tidak ada di schema:
-        // formData.append('slug', Math.random().toString(36).substring(2, 15)); 
-        
+
+        if (customCategories.length > 0) {
+            const cleaned = customCategories.filter(
+                (f) => f.label.trim() !== ""
+            )
+
+            if (cleaned.length > 0) {
+                formData.append(
+                    "customFields",
+                    JSON.stringify(cleaned)
+                )
+            } else {
+                formData.append("customFields", "[]")
+            }
+        } else {
+            formData.append("customFields", "[]")
+        }
+
+
         mutatiation.mutate(formData);
     }
 
-    // --- Render Komponen ---
     return (
         <div className="bg-card text-card-foreground p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
             <div className="font-bold text-2xl">✏️ Perbarui {category?.name}</div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-8">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nama Kategori</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="e.g. Private Therapy" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="location"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Lokasi</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Online / Harvest City" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                    <div className="border rounded-lg p-4 space-y-4">
+                        <h3 className="font-semibold">Informasi Dasar</h3>
 
-                    <FormField
-                        control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Deskripsi (Indonesia)</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Deskripsi singkat" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="descriptionEn"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Deskripsi (English)</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Short description" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="image"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Gambar (Ganti)</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={(e) => {
-                                            const file = e.target.files?.[0];
-                                            field.onChange(file);
-                                            if (imagePreview) {
-                                                URL.revokeObjectURL(imagePreview); // Revoke URL lama
-                                            }
-                                            if (file) {
-                                                const previewUrl = URL.createObjectURL(file);
-                                                setImagePreview(previewUrl);
-                                            } else {
-                                                setImagePreview(null);
-                                            }
-                                        }}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                                {imagePreview ? (
-                                    <img
-                                        src={imagePreview}
-                                        alt="Pratinjau Gambar Baru"
-                                        className="mt-2 w-40 rounded shadow"
-                                    />
-                                ) : (
-                                    category.image && (
-                                        <img
-                                            src={category.image}
-                                            alt="Gambar Saat Ini"
-                                            className="mt-2 w-40 rounded shadow"
-                                        />
-                                    )
-                                )}
-                            </FormItem>
-                        )}
-                    />
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        <FormField
-                            control={form.control}
-                            name="start"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Durasi Mulai (menit)</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            // Menggunakan event.target.valueAsNumber lebih aman
-                                            onChange={(e) =>
-                                                field.onChange(e.target.valueAsNumber ?? 0)
-                                            }
-                                            value={field.value ?? 0}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="end"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Durasi Akhir (menit)</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="number"
-                                            onChange={(e) =>
-                                                field.onChange(e.target.valueAsNumber ?? 0)
-                                            }
-                                            value={field.value ?? 0}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-y-4">
-                        <FormField
-                            control={form.control}
-                            name="isManual"
-                            render={({ field }) => (
-                                <FormItem className="flex items-center space-x-2">
-                                    <FormLabel>Pilih Manual oleh Klien</FormLabel>
-                                    <FormControl>
-                                        <Switch
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="isGroup"
-                            render={({ field }) => (
-                                <FormItem className="flex items-center space-x-2">
-                                    <FormLabel>Acara Grup (Multiple Booking)</FormLabel>
-                                    <FormControl>
-                                        <Switch
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="disable"
-                            render={({ field }) => (
-                                <FormItem className="flex items-center space-x-2">
-                                    <FormLabel>Nonaktifkan</FormLabel>
-                                    <FormControl>
-                                        <Switch
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4 items-end">
-                        <div className="flex flex-col gap-4">
+                        <div className="grid sm:grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
-                                name="isFree"
+                                name="name"
                                 render={({ field }) => (
-                                    <FormItem className="flex items-center space-x-2">
-                                        <FormLabel>Gratis</FormLabel>
+                                    <FormItem>
+                                        <FormLabel>Nama Kategori</FormLabel>
                                         <FormControl>
-                                            <Switch
-                                                checked={field.value}
-                                                onCheckedChange={(checked) => {
-                                                    field.onChange(checked);
-                                                    if (checked) {
-                                                        form.setValue("isPayAsYouWish", false);
-                                                        form.setValue("price", 0, { shouldValidate: true }); // Reset harga dan validasi
-                                                        setDisplayPrice("");
-                                                    }
-                                                }}
-                                            />
+                                            <Input placeholder="e.g. Private Therapy" {...field} />
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
-                                name="isPayAsYouWish"
+                                name="location"
                                 render={({ field }) => (
-                                    <FormItem className="flex items-center space-x-2">
-                                        <FormLabel>Bayar Sesukamu (Pay As You Wish)</FormLabel>
+                                    <FormItem>
+                                        <FormLabel>Lokasi</FormLabel>
                                         <FormControl>
-                                            <Switch
-                                                checked={field.value}
-                                                onCheckedChange={(checked) => {
-                                                    field.onChange(checked);
-                                                    if (checked) {
-                                                        form.setValue("isFree", false);
-                                                        form.setValue("price", 0, { shouldValidate: true }); // Reset harga dan validasi
-                                                        setDisplayPrice("");
-                                                    }
-                                                }}
-                                            />
+                                            <Input placeholder="Online / Harvest City" {...field} />
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
@@ -395,44 +212,311 @@ export default function CategoryUpdate({ category }: { category: ICategory }) {
 
                         <FormField
                             control={form.control}
-                            name="price"
-                            render={({ field }) => {
-                                const isFree = form.watch("isFree");
-                                const isPayAsYouWish = form.watch("isPayAsYouWish");
-                                const disabled = isFree || isPayAsYouWish;
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Deskripsi (Indonesia)</FormLabel>
+                                    <FormControl>
+                                        <Textarea placeholder="Deskripsi singkat" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                                return (
+                        <FormField
+                            control={form.control}
+                            name="descriptionEn"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Deskripsi (English)</FormLabel>
+                                    <FormControl>
+                                        <Textarea placeholder="Short description" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="image"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Gambar (Ganti)</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                field.onChange(file);
+                                                if (imagePreview) {
+                                                    URL.revokeObjectURL(imagePreview);
+                                                }
+                                                if (file) {
+                                                    const previewUrl = URL.createObjectURL(file);
+                                                    setImagePreview(previewUrl);
+                                                } else {
+                                                    setImagePreview(null);
+                                                }
+                                            }}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {imagePreview ? (
+                                        <img
+                                            src={imagePreview}
+                                            alt="Pratinjau Gambar Baru"
+                                            className="mt-2 w-40 rounded shadow"
+                                        />
+                                    ) : (
+                                        category.image && (
+                                            <img
+                                                src={category.image}
+                                                alt="Gambar Saat Ini"
+                                                className="mt-2 w-40 rounded shadow"
+                                            />
+                                        )
+                                    )}
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="border rounded-lg p-4 space-y-4">
+                        <h3 className="font-semibold">Durasi</h3>
+
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <FormField
+                                control={form.control}
+                                name="start"
+                                render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Harga</FormLabel>
+                                        <FormLabel>Durasi Mulai (menit)</FormLabel>
                                         <FormControl>
                                             <Input
-                                                type="text"
-                                                disabled={disabled}
-                                                value={displayPrice}
-                                                onChange={(e) => {
-                                                    const rawValue = e.target.value;
-                                                    // Hanya ambil angka (termasuk . jika ada, walau formatPrice menghapusnya)
-                                                    const numericString = rawValue.replace(/\D/g, "");
-                                                    const numericValue = parseInt(numericString, 10);
-
-                                                    if (!isNaN(numericValue) && numericValue >= 0) {
-                                                        // Update form value dengan angka murni
-                                                        field.onChange(numericValue);
-                                                        // Update display value dengan format Rupiah
-                                                        setDisplayPrice(formatPrice(numericValue));
-                                                    } else {
-                                                        field.onChange(0);
-                                                        setDisplayPrice("");
-                                                    }
-                                                }}
+                                                type="number"
+                                                onChange={(e) =>
+                                                    field.onChange(e.target.valueAsNumber ?? 0)
+                                                }
+                                                value={field.value ?? 0}
                                             />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
-                                );
-                            }}
-                        />
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="end"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Durasi Akhir (menit)</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="number"
+                                                onChange={(e) =>
+                                                    field.onChange(e.target.valueAsNumber ?? 0)
+                                                }
+                                                value={field.value ?? 0}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                     </div>
+                    <div className="border rounded-lg p-4 space-y-3">
+                        <h3 className="font-semibold">Perilaku Event</h3>
+
+                        <div className="grid sm:grid-cols-2 gap-y-3">
+                            <FormField
+                                control={form.control}
+                                name="isManual"
+                                render={({ field }) => (
+                                    <FormItem className="flex items-center space-x-2">
+                                        <FormLabel>Pilih Manual oleh Klien</FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="isGroup"
+                                render={({ field }) => (
+                                    <FormItem className="flex items-center space-x-2">
+                                        <FormLabel>Acara Grup (Multiple Booking)</FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="disable"
+                                render={({ field }) => (
+                                    <FormItem className="flex items-center space-x-2">
+                                        <FormLabel>Nonaktifkan</FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className="border rounded-lg p-4 space-y-4">
+                        <h3 className="font-semibold">Harga & Pembayaran</h3>
+
+                        <div className="grid sm:grid-cols-2 gap-4 items-end">
+                            <div className="flex flex-col gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="isFree"
+                                    render={({ field }) => (
+                                        <FormItem className="flex items-center space-x-2">
+                                            <FormLabel>Gratis</FormLabel>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={(checked) => {
+                                                        field.onChange(checked);
+                                                        if (checked) {
+                                                            form.setValue("isPayAsYouWish", false);
+                                                            form.setValue("price", 0, { shouldValidate: true });
+                                                            setDisplayPrice("");
+                                                        }
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="isPayAsYouWish"
+                                    render={({ field }) => (
+                                        <FormItem className="flex items-center space-x-2">
+                                            <FormLabel>Bayar Sesukamu (Pay As You Wish)</FormLabel>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={(checked) => {
+                                                        field.onChange(checked);
+                                                        if (checked) {
+                                                            form.setValue("isFree", false);
+                                                            form.setValue("price", 0, { shouldValidate: true });
+                                                            setDisplayPrice("");
+                                                        }
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({ field }) => {
+                                    const isFree = form.watch("isFree");
+                                    const isPayAsYouWish = form.watch("isPayAsYouWish");
+                                    const disabled = isFree || isPayAsYouWish;
+
+                                    return (
+                                        <FormItem>
+                                            <FormLabel>Harga</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="text"
+                                                    disabled={disabled}
+                                                    value={displayPrice}
+                                                    onChange={(e) => {
+                                                        const rawValue = e.target.value;
+                                                        const numericString = rawValue.replace(/\D/g, "");
+                                                        const numericValue = parseInt(numericString, 10);
+
+                                                        if (!isNaN(numericValue) && numericValue >= 0) {
+                                                            field.onChange(numericValue);
+                                                            setDisplayPrice(formatPrice(numericValue));
+                                                        } else {
+                                                            field.onChange(0);
+                                                            setDisplayPrice("");
+                                                        }
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    );
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="border rounded-lg p-4 space-y-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h3 className="font-semibold">Custom Form</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Field tambahan yang akan diisi user saat booking
+                                </p>
+                            </div>
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={addCustomField}
+                            >
+                                + Tambah Field
+                            </Button>
+                        </div>
+
+                        {customCategories.length === 0 && (
+                            <p className="text-sm text-muted-foreground">
+                                Tidak ada custom field
+                            </p>
+                        )}
+
+                        {customCategories.map((field, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                                <Input
+                                    placeholder={`Pertanyaan ${index + 1} (contoh: Tujuan ikut?)`}
+                                    value={field.label}
+                                    onChange={(e) =>
+                                        updateCustomField(index, e.target.value)
+                                    }
+                                />
+                                <Button
+                                    type="button"
+                                    variant="destructive"
+                                    disabled={customCategories.length === 1}
+                                    size="sm"
+                                    onClick={() => removeCustomField(index)}
+                                >
+                                    Hapus
+                                </Button>
+                            </div>
+                        ))}
+                    </div>
+
 
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting ? "🔄 Memperbarui..." : "Perbarui Kategori"}

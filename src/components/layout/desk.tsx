@@ -151,26 +151,31 @@ export default function FirstApp() {
                 </div>
             </header>
 
-            <main className="flex-1 flex flex-col items-center justify-center p-6 -mt-16">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-12 gap-y-12">
+            <main className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-8 py-6 md:py-10">
+                <div className=" mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8 max-w-7xl">
                     {SERVICE_ITEM.filter((m) => menu.includes(m.type)).map((item: ItemInterface) => (
                         <Link
                             to={item.location}
-                            
-                            className="group flex flex-col items-center gap-4 outline-none"
-                        >
-                            <div className={`w-[100px] h-[100px] ${item.class} rounded-[24px] shadow-2xl shadow-orange-900/30 flex items-center justify-center text-white group-hover:scale-105 group-hover:shadow-orange-500/40 group-focus:ring-4 ring-orange-500/30 transition-all duration-300 relative border-t border-white/20`}>
+
+                            className="group flex flex-col items-center gap-4 outline-none">
+                            <div
+                                className={` w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] md:w-[100px] md:h-[100px] ${item.class} rounded-2xl shadow-xl flex items-center justify-center text-white group-hover:scale-105 transition-all`}>
+
                                 <item.icon size={42} strokeWidth={1.5} className="drop-shadow-sm" />
                                 {/* <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold h-6 min-w-[24px] px-1.5 flex items-center justify-center rounded-full border-4 border-[#383b53] shadow-sm">5</div> */}
                             </div>
-                            <span className="text-slate-200 font-medium text-lg tracking-wide group-hover:text-white transition-colors drop-shadow-md">{item.label}</span>
+                            <span className=" text-slate-200 text-sm sm:text-base font-medium text-center">
+                                {item.label}</span>
                         </Link>
                     ))}
                 </div>
             </main>
-            <div className="absolute bottom-6 left-0 right-0 text-center">
-                <p className="text-white/20 text-sm font-medium">Thera Platform {APP_VERSION}</p>
-            </div>
+            <footer className="py-4 text-center">
+                <p className="text-white/20 text-sm font-medium">
+                    Thera Platform {APP_VERSION}
+                </p>
+            </footer>
+
         </div >
     )
 }

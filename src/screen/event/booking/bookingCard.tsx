@@ -65,6 +65,23 @@ export function BookingCard({ data, onDelete, onClose }: BookingCardProps) {
                             minute: "2-digit",
                         })}
                     </p>
+
+                    {data.customAnswers?.length > 0 && (
+                        <div className="mt-2 border-t pt-2 space-y-1">
+                            <div className="text-xs font-semibold text-muted-foreground">
+                                Custom Answer
+                            </div>
+                            {data.customAnswers.map((item, idx) => (
+                                <div key={idx} className="text-xs">
+                                    <span className="font-medium">{item.label}:</span>{" "}
+                                    <span className="text-muted-foreground">
+                                        {item.value || "-"}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
                 </div>
 
                 <Badge

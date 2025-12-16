@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+type CustomCategoryField = {
+  label: string
+  type: "text"
+}
+
+type CustomAnswer = {
+  value: string
+  label:string
+}
+
+
 export interface ICategory {
   id: string;
   name: string;
@@ -16,6 +27,9 @@ export interface ICategory {
   slug: string;
   start: number;
   end: number;
+
+  customFields?: CustomCategoryField[]
+
 }
 
 export const CategoriesSchema = z
@@ -147,6 +161,7 @@ export interface IBooking {
       image: string;
     };
   };
+  customAnswers: CustomAnswer[]
 }
 
 export type TFooter = {

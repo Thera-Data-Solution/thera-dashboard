@@ -14,7 +14,6 @@ import {
     FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Switch } from '@/components/ui/switch';
 import { LoadScreen } from "@/components/loadingScreen";
 import {
     Select,
@@ -37,16 +36,16 @@ const schema = z.object({
     appName: z.string().min(1),
     appTitle: z.string().min(1),
     appDescription: z.string().min(1),
-    appTheme: z.enum(["light", "dark"]),
-    appMainColor: z.string().min(1),
-    appHeaderColor: z.string().min(1),
-    appFooterColor: z.string().min(1),
-    fontSize: z.coerce.number().min(10).max(24),
-    appDecoration: z.string().optional(),
-    enableChatBot: z.boolean(),
-    enableFacilitator: z.boolean(),
-    enablePaymentGateway: z.boolean(),
-    metaOg: z.string().url().optional(),
+    appTheme: z.enum(["theme-1", "theme-2"]),
+    // appMainColor: z.string().min(1),
+    // appHeaderColor: z.string().min(1),
+    // appFooterColor: z.string().min(1),
+    // fontSize: z.coerce.number().min(10).max(24),
+    // appDecoration: z.string().optional(),
+    // enableChatBot: z.boolean(),
+    // enableFacilitator: z.boolean(),
+    // enablePaymentGateway: z.boolean(),
+    // metaOg: z.string().url().optional(),
     timezone: z.string().min(1),
     appLogo: z.union([z.instanceof(File), z.string()]).optional(),
 });
@@ -65,16 +64,16 @@ export default function AppSettingScreen() {
             appName: "",
             appTitle: "",
             appDescription: "",
-            appTheme: "light",
-            appMainColor: "#4CAF50",
-            appHeaderColor: "#2E7D32",
-            appFooterColor: "#1B5E20",
-            fontSize: 16,
-            appDecoration: "",
-            enableChatBot: true,
-            enableFacilitator: true,
-            enablePaymentGateway: false,
-            metaOg: "",
+            appTheme: "theme-1",
+            // appMainColor: "#4CAF50",
+            // appHeaderColor: "#2E7D32",
+            // appFooterColor: "#1B5E20",
+            // fontSize: 16,
+            // appDecoration: "",
+            // enableChatBot: true,
+            // enableFacilitator: true,
+            // enablePaymentGateway: false,
+            // metaOg: "",
             timezone: "Asia/Jakarta",
             appLogo: undefined,
         },
@@ -86,16 +85,16 @@ export default function AppSettingScreen() {
                 appName: query.data.appName ?? "",
                 appTitle: query.data.appTitle ?? "",
                 appDescription: query.data.appDescription ?? "",
-                appTheme: (query.data.appTheme as "light" | "dark") ?? "light",
-                appMainColor: query.data.appMainColor ?? "#4CAF50",
-                appHeaderColor: query.data.appHeaderColor ?? "#2E7D32",
-                appFooterColor: query.data.appFooterColor ?? "#1B5E20",
-                fontSize: Number(query.data.fontSize ?? 16),
-                appDecoration: query.data.appDecoration ?? "",
-                enableChatBot: Boolean(query.data.enableChatBot),
-                enableFacilitator: Boolean(query.data.enableFacilitator),
-                enablePaymentGateway: Boolean(query.data.enablePaymentGateway),
-                metaOg: query.data.metaOg ?? "",
+                appTheme: (query.data.appTheme as "theme-1" | "theme-2") ?? "theme-1",
+                // appMainColor: query.data.appMainColor ?? "#4CAF50",
+                // appHeaderColor: query.data.appHeaderColor ?? "#2E7D32",
+                // appFooterColor: query.data.appFooterColor ?? "#1B5E20",
+                // fontSize: Number(query.data.fontSize ?? 16),
+                // appDecoration: query.data.appDecoration ?? "",
+                // enableChatBot: Boolean(query.data.enableChatBot),
+                // enableFacilitator: Boolean(query.data.enableFacilitator),
+                // enablePaymentGateway: Boolean(query.data.enablePaymentGateway),
+                // metaOg: query.data.metaOg ?? "",
                 timezone: query.data.timezone ?? "Asia/Jakarta",
                 appLogo: query.data.appLogo ?? undefined,
             });
@@ -123,18 +122,18 @@ export default function AppSettingScreen() {
             append("appTitle", values.appTitle);
             append("appDescription", values.appDescription);
             append("appTheme", values.appTheme);
-            append("appMainColor", values.appMainColor);
-            append("appHeaderColor", values.appHeaderColor);
-            append("appFooterColor", values.appFooterColor);
-            append("fontSize", values.fontSize);
-            append("appDecoration", values.appDecoration);
-            append("enableChatBot", values.enableChatBot);
-            append("enableFacilitator", values.enableFacilitator);
-            append("enablePaymentGateway", values.enablePaymentGateway);
+            // append("appMainColor", values.appMainColor);
+            // append("appHeaderColor", values.appHeaderColor);
+            // append("appFooterColor", values.appFooterColor);
+            // append("fontSize", values.fontSize);
+            // append("appDecoration", values.appDecoration);
+            // append("enableChatBot", values.enableChatBot);
+            // append("enableFacilitator", values.enableFacilitator);
+            // append("enablePaymentGateway", values.enablePaymentGateway);
 
-            if (values.metaOg && values.metaOg.trim() !== "") {
-                append("metaOg", values.metaOg);
-            }
+            // if (values.metaOg && values.metaOg.trim() !== "") {
+            //     append("metaOg", values.metaOg);
+            // }
 
             append("timezone", values.timezone);
 
@@ -182,18 +181,19 @@ export default function AppSettingScreen() {
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select Theme" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent position="popper">
                                     <SelectGroup>
-                                        <SelectItem value="light">Light</SelectItem>
-                                        <SelectItem value="dark">Dark</SelectItem>
+                                        <SelectItem value="theme-1">Nature</SelectItem>
+                                        <SelectItem value="theme-2">Tibet</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
+
                         )}
                     />
                 </Field>
 
-                <Field>
+                {/* <Field>
                     <FieldLabel>Main Color</FieldLabel>
                     <Input type="color" {...form.register("appMainColor")} />
                 </Field>
@@ -201,7 +201,7 @@ export default function AppSettingScreen() {
                 <Field>
                     <FieldLabel>Header Color</FieldLabel>
                     <Input type="color" {...form.register("appHeaderColor")} />
-                </Field>
+                </Field> 
 
                 <Field>
                     <FieldLabel>Footer Color</FieldLabel>
@@ -271,7 +271,7 @@ export default function AppSettingScreen() {
                 <Field>
                     <FieldLabel>Meta OG</FieldLabel>
                     <Input {...form.register("metaOg")} />
-                </Field>
+                </Field> */}
 
                 {/* Timezone SELECT */}
                 <Field>
@@ -284,7 +284,7 @@ export default function AppSettingScreen() {
                                 <SelectTrigger>
                                     <SelectValue placeholder="Pilih Timezone" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent position="popper">
                                     <SelectGroup>
                                         {timezoneList.map((t) => (
                                             <SelectItem key={t} value={t}>

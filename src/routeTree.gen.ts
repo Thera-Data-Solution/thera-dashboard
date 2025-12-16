@@ -49,6 +49,7 @@ import { Route as AppContentArticlesIndexRouteImport } from './routes/app.conten
 import { Route as AppContentArticleIndexRouteImport } from './routes/app.content.article.index'
 import { Route as AppEventCategoriesNewRouteImport } from './routes/app.event.categories.new'
 import { Route as AppContentArticleNewRouteImport } from './routes/app.content.article.new'
+import { Route as AppEventCategoriesUpdateIndexRouteImport } from './routes/app.event.categories.update.index'
 import { Route as AppEventCategoriesUpdateCatIdRouteImport } from './routes/app.event.categories.update.$catId'
 import { Route as AppContentArticleUpdateArIdRouteImport } from './routes/app.content.article.update.$arId'
 
@@ -253,6 +254,12 @@ const AppContentArticleNewRoute = AppContentArticleNewRouteImport.update({
   path: '/article/new',
   getParentRoute: () => AppContentRouteRoute,
 } as any)
+const AppEventCategoriesUpdateIndexRoute =
+  AppEventCategoriesUpdateIndexRouteImport.update({
+    id: '/categories/update/',
+    path: '/categories/update/',
+    getParentRoute: () => AppEventRouteRoute,
+  } as any)
 const AppEventCategoriesUpdateCatIdRoute =
   AppEventCategoriesUpdateCatIdRouteImport.update({
     id: '/categories/update/$catId',
@@ -309,6 +316,7 @@ export interface FileRoutesByFullPath {
   '/app/setting/user': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
+  '/app/event/categories/update': typeof AppEventCategoriesUpdateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -347,6 +355,7 @@ export interface FileRoutesByTo {
   '/app/setting/user': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
+  '/app/event/categories/update': typeof AppEventCategoriesUpdateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -392,6 +401,7 @@ export interface FileRoutesById {
   '/app/setting/user/': typeof AppSettingUserIndexRoute
   '/app/content/article/update/$arId': typeof AppContentArticleUpdateArIdRoute
   '/app/event/categories/update/$catId': typeof AppEventCategoriesUpdateCatIdRoute
+  '/app/event/categories/update/': typeof AppEventCategoriesUpdateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -438,6 +448,7 @@ export interface FileRouteTypes {
     | '/app/setting/user'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
+    | '/app/event/categories/update'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -476,6 +487,7 @@ export interface FileRouteTypes {
     | '/app/setting/user'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
+    | '/app/event/categories/update'
   id:
     | '__root__'
     | '/'
@@ -520,6 +532,7 @@ export interface FileRouteTypes {
     | '/app/setting/user/'
     | '/app/content/article/update/$arId'
     | '/app/event/categories/update/$catId'
+    | '/app/event/categories/update/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -811,6 +824,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContentArticleNewRouteImport
       parentRoute: typeof AppContentRouteRoute
     }
+    '/app/event/categories/update/': {
+      id: '/app/event/categories/update/'
+      path: '/categories/update'
+      fullPath: '/app/event/categories/update'
+      preLoaderRoute: typeof AppEventCategoriesUpdateIndexRouteImport
+      parentRoute: typeof AppEventRouteRoute
+    }
     '/app/event/categories/update/$catId': {
       id: '/app/event/categories/update/$catId'
       path: '/categories/update/$catId'
@@ -881,6 +901,7 @@ interface AppEventRouteRouteChildren {
   AppEventCategoriesIndexRoute: typeof AppEventCategoriesIndexRoute
   AppEventSchedulesIndexRoute: typeof AppEventSchedulesIndexRoute
   AppEventCategoriesUpdateCatIdRoute: typeof AppEventCategoriesUpdateCatIdRoute
+  AppEventCategoriesUpdateIndexRoute: typeof AppEventCategoriesUpdateIndexRoute
 }
 
 const AppEventRouteRouteChildren: AppEventRouteRouteChildren = {
@@ -890,6 +911,7 @@ const AppEventRouteRouteChildren: AppEventRouteRouteChildren = {
   AppEventCategoriesIndexRoute: AppEventCategoriesIndexRoute,
   AppEventSchedulesIndexRoute: AppEventSchedulesIndexRoute,
   AppEventCategoriesUpdateCatIdRoute: AppEventCategoriesUpdateCatIdRoute,
+  AppEventCategoriesUpdateIndexRoute: AppEventCategoriesUpdateIndexRoute,
 }
 
 const AppEventRouteRouteWithChildren = AppEventRouteRoute._addFileChildren(
