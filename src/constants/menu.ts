@@ -54,7 +54,7 @@ export const DEFAULT_MENU = [
   },
   {
     title: "Reviews",
-    url: "#",
+    url: "/app/event/review",
     path: "/app/event",
     icon: MessageSquare, // review
     type: "event",

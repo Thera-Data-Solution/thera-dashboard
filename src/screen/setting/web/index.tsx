@@ -37,18 +37,18 @@ const schema = z.object({
     appTitle: z.string().min(1),
     appDescription: z.string().min(1),
     appTheme: z.enum(["theme-1", "theme-2"]),
-    // appMainColor: z.string().min(1),
-    // appHeaderColor: z.string().min(1),
-    // appFooterColor: z.string().min(1),
-    // fontSize: z.coerce.number().min(10).max(24),
-    // appDecoration: z.string().optional(),
-    // enableChatBot: z.boolean(),
-    // enableFacilitator: z.boolean(),
-    // enablePaymentGateway: z.boolean(),
-    // metaOg: z.string().url().optional(),
     timezone: z.string().min(1),
     appLogo: z.union([z.instanceof(File), z.string()]).optional(),
+
+    telegramBotToken: z.string().optional(),
+    telegramChatId: z.string().optional(),
+
+    mailKey: z.string().optional(),
+    mailSecret: z.string().optional(),
+
+    discordReportId: z.string().optional(),
 });
+
 
 type FormValues = z.infer<typeof schema>;
 
@@ -65,18 +65,16 @@ export default function AppSettingScreen() {
             appTitle: "",
             appDescription: "",
             appTheme: "theme-1",
-            // appMainColor: "#4CAF50",
-            // appHeaderColor: "#2E7D32",
-            // appFooterColor: "#1B5E20",
-            // fontSize: 16,
-            // appDecoration: "",
-            // enableChatBot: true,
-            // enableFacilitator: true,
-            // enablePaymentGateway: false,
-            // metaOg: "",
             timezone: "Asia/Jakarta",
             appLogo: undefined,
+
+            telegramBotToken: "",
+            telegramChatId: "",
+            mailKey: "",
+            mailSecret: "",
+            discordReportId: "",
         },
+
     });
 
     useEffect(() => {
@@ -86,18 +84,16 @@ export default function AppSettingScreen() {
                 appTitle: query.data.appTitle ?? "",
                 appDescription: query.data.appDescription ?? "",
                 appTheme: (query.data.appTheme as "theme-1" | "theme-2") ?? "theme-1",
-                // appMainColor: query.data.appMainColor ?? "#4CAF50",
-                // appHeaderColor: query.data.appHeaderColor ?? "#2E7D32",
-                // appFooterColor: query.data.appFooterColor ?? "#1B5E20",
-                // fontSize: Number(query.data.fontSize ?? 16),
-                // appDecoration: query.data.appDecoration ?? "",
-                // enableChatBot: Boolean(query.data.enableChatBot),
-                // enableFacilitator: Boolean(query.data.enableFacilitator),
-                // enablePaymentGateway: Boolean(query.data.enablePaymentGateway),
-                // metaOg: query.data.metaOg ?? "",
                 timezone: query.data.timezone ?? "Asia/Jakarta",
                 appLogo: query.data.appLogo ?? undefined,
+
+                telegramBotToken: query.data.telegramBotToken ?? "",
+                telegramChatId: query.data.telegramChatId ?? "",
+                mailKey: query.data.mailKey ?? "",
+                mailSecret: query.data.mailSecret ?? "",
+                discordReportId: query.data.discordReportId ?? "",
             });
+
         }
     }, [form, query.data]);
 
@@ -122,18 +118,12 @@ export default function AppSettingScreen() {
             append("appTitle", values.appTitle);
             append("appDescription", values.appDescription);
             append("appTheme", values.appTheme);
-            // append("appMainColor", values.appMainColor);
-            // append("appHeaderColor", values.appHeaderColor);
-            // append("appFooterColor", values.appFooterColor);
-            // append("fontSize", values.fontSize);
-            // append("appDecoration", values.appDecoration);
-            // append("enableChatBot", values.enableChatBot);
-            // append("enableFacilitator", values.enableFacilitator);
-            // append("enablePaymentGateway", values.enablePaymentGateway);
+            append("telegramBotToken", values.telegramBotToken);
+            append("telegramChatId", values.telegramChatId);
+            append("mailKey", values.mailKey);
+            append("mailSecret", values.mailSecret);
+            append("discordReportId", values.discordReportId);
 
-            // if (values.metaOg && values.metaOg.trim() !== "") {
-            //     append("metaOg", values.metaOg);
-            // }
 
             append("timezone", values.timezone);
 
@@ -169,8 +159,7 @@ export default function AppSettingScreen() {
                     <FieldLabel>Description</FieldLabel>
                     <Input {...form.register("appDescription")} />
                 </Field>
-
-                {/* Theme (Controller) */}
+                
                 <Field>
                     <FieldLabel>Theme</FieldLabel>
                     <Controller
@@ -192,88 +181,7 @@ export default function AppSettingScreen() {
                         )}
                     />
                 </Field>
-
-                {/* <Field>
-                    <FieldLabel>Main Color</FieldLabel>
-                    <Input type="color" {...form.register("appMainColor")} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Header Color</FieldLabel>
-                    <Input type="color" {...form.register("appHeaderColor")} />
-                </Field> 
-
-                <Field>
-                    <FieldLabel>Footer Color</FieldLabel>
-                    <Input type="color" {...form.register("appFooterColor")} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Font Size</FieldLabel>
-                    <Input type="number" {...form.register("fontSize", { valueAsNumber: true })} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Decoration</FieldLabel>
-                    <Input {...form.register("appDecoration")} />
-                </Field>
-
-                <div className="flex md:flex-row flex-col items-center justify-between gap-4">
-                    <Field>
-                        <FieldLabel>Enable ChatBot</FieldLabel>
-                        <Controller
-                            name="enableChatBot"
-                            control={form.control}
-                            render={({ field }) => (
-                                <div className="flex">
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    <span className="ml-2">
-                                        {field.value ? "Enabled" : "Disabled"}
-                                    </span>
-                                </div>
-                            )}
-                        />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel>Enable Facilitator</FieldLabel>
-                        <Controller
-                            name="enableFacilitator"
-                            control={form.control}
-                            render={({ field }) => (
-                                <div className="flex">
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    <span className="ml-2">
-                                        {field.value ? "Enabled" : "Disabled"}
-                                    </span>
-                                </div>
-                            )}
-                        />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel>Enable Payment Gateway</FieldLabel>
-                        <Controller
-                            name="enablePaymentGateway"
-                            control={form.control}
-                            render={({ field }) => (
-                                <div className="flex">
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    <span className="ml-2">
-                                        {field.value ? "Enabled" : "Disabled"}
-                                    </span>
-                                </div>
-                            )}
-                        />
-                    </Field>
-                </div>
-
-                <Field>
-                    <FieldLabel>Meta OG</FieldLabel>
-                    <Input {...form.register("metaOg")} />
-                </Field> */}
-
-                {/* Timezone SELECT */}
+                
                 <Field>
                     <FieldLabel>Timezone</FieldLabel>
                     <Controller
@@ -316,6 +224,41 @@ export default function AppSettingScreen() {
                         )}
                     />
                 </Field>
+
+
+                <h2 className="text-lg font-semibold pt-4">Telegram</h2>
+
+                <Field>
+                    <FieldLabel>Bot Token</FieldLabel>
+                    <Input {...form.register("telegramBotToken")} placeholder="123456:ABC-DEF..." />
+                </Field>
+
+                <Field>
+                    <FieldLabel>Chat ID</FieldLabel>
+                    <Input {...form.register("telegramChatId")} placeholder="-100xxxxxxxxx" />
+                </Field>
+
+                <h2 className="text-lg font-semibold pt-4">Email</h2>
+
+                <Field>
+                    <FieldLabel>Mail Key</FieldLabel>
+                    <Input {...form.register("mailKey")} />
+                </Field>
+
+                <Field>
+                    <FieldLabel>Mail Secret</FieldLabel>
+                    <Input type="password" {...form.register("mailSecret")} />
+                </Field>
+
+
+                <h2 className="text-lg font-semibold pt-4">Discord</h2>
+
+                <Field>
+                    <FieldLabel>Report Channel ID</FieldLabel>
+                    <Input {...form.register("discordReportId")} />
+                </Field>
+
+
             </FieldGroup>
 
             <div className="flex gap-3">

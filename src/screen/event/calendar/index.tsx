@@ -78,7 +78,7 @@ export default function SchedulesPage({
   // const filteredSchedules = selectedCategoryId
   //   ? schedules.filter((s) => s.categories?.id === selectedCategoryId)
   //   : schedules;
-  const filteredSchedules = selectedCategoryId === "all" ? schedules : schedules.filter((s) => s.categories?.id === selectedCategoryId)
+  const filteredSchedules = (selectedCategoryId === "all" ||!selectedCategoryId) ? schedules : schedules.filter((s) => s.categories?.id === selectedCategoryId)
 
   if (timezone === '') {
     return (

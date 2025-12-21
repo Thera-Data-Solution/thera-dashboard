@@ -29,6 +29,7 @@ import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppSystemUserRouteImport } from './routes/app.system.user'
 import { Route as AppSettingPartnerRouteImport } from './routes/app.setting.partner'
 import { Route as AppSettingCollabRouteImport } from './routes/app.setting.collab'
+import { Route as AppEventReviewRouteImport } from './routes/app.event.review'
 import { Route as AppDashboardUserRouteImport } from './routes/app.dashboard.user'
 import { Route as AppDashboardOverviewRouteImport } from './routes/app.dashboard.overview'
 import { Route as AppAdminUserRouteImport } from './routes/app.admin.user'
@@ -152,6 +153,11 @@ const AppSettingCollabRoute = AppSettingCollabRouteImport.update({
   id: '/collab',
   path: '/collab',
   getParentRoute: () => AppSettingRouteRoute,
+} as any)
+const AppEventReviewRoute = AppEventReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AppEventRouteRoute,
 } as any)
 const AppDashboardUserRoute = AppDashboardUserRouteImport.update({
   id: '/dashboard/user',
@@ -292,6 +298,7 @@ export interface FileRoutesByFullPath {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/event/review': typeof AppEventReviewRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
   '/app/setting/partner': typeof AppSettingPartnerRoute
   '/app/system/user': typeof AppSystemUserRoute
@@ -331,6 +338,7 @@ export interface FileRoutesByTo {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/event/review': typeof AppEventReviewRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
   '/app/setting/partner': typeof AppSettingPartnerRoute
   '/app/system/user': typeof AppSystemUserRoute
@@ -377,6 +385,7 @@ export interface FileRoutesById {
   '/app/admin/user': typeof AppAdminUserRoute
   '/app/dashboard/overview': typeof AppDashboardOverviewRoute
   '/app/dashboard/user': typeof AppDashboardUserRoute
+  '/app/event/review': typeof AppEventReviewRoute
   '/app/setting/collab': typeof AppSettingCollabRoute
   '/app/setting/partner': typeof AppSettingPartnerRoute
   '/app/system/user': typeof AppSystemUserRoute
@@ -424,6 +433,7 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/event/review'
     | '/app/setting/collab'
     | '/app/setting/partner'
     | '/app/system/user'
@@ -463,6 +473,7 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/event/review'
     | '/app/setting/collab'
     | '/app/setting/partner'
     | '/app/system/user'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/app/admin/user'
     | '/app/dashboard/overview'
     | '/app/dashboard/user'
+    | '/app/event/review'
     | '/app/setting/collab'
     | '/app/setting/partner'
     | '/app/system/user'
@@ -683,6 +695,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/setting/collab'
       preLoaderRoute: typeof AppSettingCollabRouteImport
       parentRoute: typeof AppSettingRouteRoute
+    }
+    '/app/event/review': {
+      id: '/app/event/review'
+      path: '/review'
+      fullPath: '/app/event/review'
+      preLoaderRoute: typeof AppEventReviewRouteImport
+      parentRoute: typeof AppEventRouteRoute
     }
     '/app/dashboard/user': {
       id: '/app/dashboard/user'
@@ -895,6 +914,7 @@ const AppContentRouteRouteWithChildren = AppContentRouteRoute._addFileChildren(
 )
 
 interface AppEventRouteRouteChildren {
+  AppEventReviewRoute: typeof AppEventReviewRoute
   AppEventIndexRoute: typeof AppEventIndexRoute
   AppEventCategoriesNewRoute: typeof AppEventCategoriesNewRoute
   AppEventBookingIndexRoute: typeof AppEventBookingIndexRoute
@@ -905,6 +925,7 @@ interface AppEventRouteRouteChildren {
 }
 
 const AppEventRouteRouteChildren: AppEventRouteRouteChildren = {
+  AppEventReviewRoute: AppEventReviewRoute,
   AppEventIndexRoute: AppEventIndexRoute,
   AppEventCategoriesNewRoute: AppEventCategoriesNewRoute,
   AppEventBookingIndexRoute: AppEventBookingIndexRoute,

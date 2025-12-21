@@ -6,11 +6,12 @@ export type AppSettings = {
   appTitle: string;
   appDescription: string;
   appTheme: "light" | "dark";
-  appMainColor: string;
-  appHeaderColor: string;
-  appFooterColor: string;
-  fontSize: number | string;
-  appDecoration?: string;
+  telegramBotToken?: string;
+  telegramChatId?: string;
+  mailKey?: string;
+  mailSecret?: string;
+  discordReportId?: string;
+
   enableChatBot: boolean | string;
   enableFacilitator: boolean | string;
   enablePaymentGateway: boolean | string;

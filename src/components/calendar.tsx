@@ -72,7 +72,7 @@ export default function CalendarComponents({ data, categories, timezone }: Props
     const [openDialog, setOpenDialog] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [time, setTime] = useState("");
     const queryClient = Route.useRouteContext().queryClient
     // 

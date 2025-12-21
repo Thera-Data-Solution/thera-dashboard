@@ -196,3 +196,42 @@ export interface ITenant {
   createdAt: string
   updatedAt: string
 }
+
+
+
+export interface IReview {
+    id:            string;
+    userId:        string;
+    scheduleId:    string;
+    bookedAt:      Date;
+    testimoni:     string;
+    showTesti:     boolean;
+    anonymous:     boolean;
+    tenantId:      string;
+    customAnswers: CustomAnswer[];
+    user:          User;
+    schedule:      Schedule;
+}
+
+export interface Schedule {
+    id:         string;
+    dateTime:   Date;
+    categoryId: string;
+    status:     string;
+    tenantId:   string;
+    categories: ICategory;
+}
+
+export interface User {
+    id:       string;
+    avatar:   string;
+    email:    string;
+    password: string;
+    fullName: string;
+    phone:    string;
+    address:  string;
+    ig:       string;
+    fb:       string;
+    disable:  boolean;
+    tenantId: string;
+}
