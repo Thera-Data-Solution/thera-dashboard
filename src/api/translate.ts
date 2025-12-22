@@ -1,7 +1,17 @@
 import { authApi } from ".";
 
-export async function getTranslate() {
-    const res = await authApi.get("/translations");
+export interface TranslateQueryParams {
+    limit?: number;
+    namespace?: string;
+    locale?: string;
+    page?: number;
+    search?: string;
+}
+
+export async function getTranslate(params?: TranslateQueryParams) {
+    const res = await authApi.get("/translations", {
+        params,
+    });
     return res.data;
 }
 

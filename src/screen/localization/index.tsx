@@ -1,4 +1,4 @@
-import {type FormEvent, useState} from 'react';
+import { type FormEvent, useState } from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { DataTableArticle } from '@/screen/content/articles/dataTable';
 import { Button } from '@/components/ui/button';
@@ -28,11 +28,13 @@ import {
     useUpdateTranslation,
     useDeleteTranslation,
     type TranslateItem,
+    useTranslations,
+    type TranslateFilters,
 } from '@/hooks/translateHook.tsx';
 import { Loader2, Plus, Pencil, Trash2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 
-export default function Localization({ data }: { data: TranslateItem[] }) {
+export default function Localization() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
@@ -43,6 +45,15 @@ export default function Localization({ data }: { data: TranslateItem[] }) {
         key: '',
         value: '',
     });
+    const [filters, setFilters] = useState<TranslateFilters>({
+        limit: 1000,
+        page: 1,
+        locale: '',
+        namespace: '',
+        search: '',
+    });
+
+    const { data, isLoading, isError } = useTranslations(filters);
 
     const createMutation = useCreateTranslation();
     const updateMutation = useUpdateTranslation();
@@ -168,15 +179,67 @@ export default function Localization({ data }: { data: TranslateItem[] }) {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <h1 className="text-3xl font-bold">Translations</h1>
-                <Button onClick={handleOpenCreate}>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Tambah Translation
-                </Button>
+                <div className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-end">
+                    <Input
+                        className="md:max-w-xs"
+                        placeholder="Cari (key / value / lainnya)..."
+                        value={filters.search ?? ''}
+                        onChange={(e) =>
+                            setFilters((prev) => ({
+                                ...prev,
+                                search: e.target.value,
+                                page: 1,
+                            }))
+                        }
+                    />
+                    <Input
+                        className="md:max-w-[140px]"
+                        placeholder="Locale (mis. id, en)"
+                        value={filters.locale ?? ''}
+                        onChange={(e) =>
+                            setFilters((prev) => ({
+                                ...prev,
+                                locale: e.target.value,
+                                page: 1,
+                            }))
+                        }
+                    />
+                    <Input
+                        className="md:max-w-[160px]"
+                        placeholder="Namespace (mis. artikel)"
+                        value={filters.namespace ?? ''}
+                        onChange={(e) =>
+                            setFilters((prev) => ({
+                                ...prev,
+                                namespace: e.target.value,
+                                page: 1,
+                            }))
+                        }
+                    />
+                    <Button onClick={handleOpenCreate}>
+                        <Plus className="w-4 h-4 mr-2" />
+                        Tambah Translation
+                    </Button>
+                </div>
             </div>
 
-            <DataTableArticle columns={columns} data={data} />
+            {isLoading && (
+                <div className="flex items-center justify-center h-52">
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                </div>
+            )}
+
+            {isError && !isLoading && (
+                <div className="flex items-center justify-center h-52">
+                    <p className="text-destructive">Gagal memuat data translations</p>
+                </div>
+            )}
+
+            {!isLoading && !isError && (
+                <DataTableArticle columns={columns} data={data?.data ?? []} />
+            )}
 
             {/* Drawer for Create/Edit */}
             <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>

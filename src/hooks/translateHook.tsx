@@ -4,7 +4,8 @@ import {
     getTranslateById,
     createTranslate,
     updateTranslate,
-    deleteTranslate
+    deleteTranslate,
+    type TranslateQueryParams,
 } from '@/api/translate';
 import { toast } from 'sonner';
 
@@ -31,11 +32,15 @@ export interface TranslateItem extends TranslateData {
     updatedAt?: string;
 }
 
-// Get all translations
-export function useTranslations() {
+export type TranslateFilters = TranslateQueryParams;
+
+// Get all translations (with optional filters)
+export function useTranslations(filters: TranslateFilters = {}) {
+    const filterKey = JSON.stringify(filters ?? {});
+
     return useQuery({
-        queryKey: translateKeys.lists(),
-        queryFn: getTranslate,
+        queryKey: translateKeys.list(filterKey),
+        queryFn: () => getTranslate(filters),
     });
 }
 

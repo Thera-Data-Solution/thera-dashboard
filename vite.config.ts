@@ -22,7 +22,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/be": {
-        target: "https://potential-elysee-keps-8395b96e.koyeb.app/",
+        target: "http://localhost:8080/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/be/, ''),
         configure: (proxy) => {
