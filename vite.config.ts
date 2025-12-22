@@ -19,4 +19,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/be": {
+        target: "https://potential-elysee-keps-8395b96e.koyeb.app/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/be/, ''),
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq) => {
+            proxyReq.setHeader("X-Tenant-ID", "c78ae261-d987-4570-9220-774846531ddf");
+          });
+        },
+      },
+    },
+  },
 })

@@ -10,13 +10,19 @@ import { toast } from "sonner";
 export const Route = createFileRoute('/')({
     loader: ({ context }) => {
         const { authStore } = context;
-        const { token, isLoggedIn } = authStore.getState();
+        const { token, isLoggedIn, user, logout } = authStore.getState();
 
         if (token && isLoggedIn) {
-            throw redirect({
-                to: '/dashboard',
-                replace: true,
-            });
+            if (user?.role === 'USER') {
+                toast('Akun Anda sudah terdaftar, tapi masih menunggu verifikasi. Silakan hubungi kami langsung jika perlu bantuan.')
+                logout();
+                return;
+            } else {
+                throw redirect({
+                    to: '/dashboard',
+                    replace: true,
+                });
+            }
         }
     },
     component: LoginPage,

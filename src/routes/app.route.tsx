@@ -4,7 +4,8 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 export const Route = createFileRoute('/app')({
   component: RouteComponent,
   loader: ({ context }) => {
-    if (!context.authStore.getState().isLoggedIn) {
+    const { isLoggedIn, user } = context.authStore.getState();
+    if (!isLoggedIn || user?.role === 'USER') {
       throw redirect({
         to: "/",
       });
