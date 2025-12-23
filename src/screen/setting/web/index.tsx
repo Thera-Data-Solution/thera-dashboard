@@ -36,7 +36,7 @@ const schema = z.object({
     appName: z.string().min(1),
     appTitle: z.string().min(1),
     appDescription: z.string().min(1),
-    appTheme: z.enum(["theme-1", "theme-2"]),
+    appTheme: z.enum(["theme-1", "theme-2", "theme-3", "theme-4"]),
     timezone: z.string().min(1),
     appLogo: z.union([z.instanceof(File), z.string()]).optional(),
 
@@ -174,6 +174,8 @@ export default function AppSettingScreen() {
                                     <SelectGroup>
                                         <SelectItem value="theme-1">Nature</SelectItem>
                                         <SelectItem value="theme-2">Tibet</SelectItem>
+                                        <SelectItem value="theme-3">Crimson Ash</SelectItem>
+                                        <SelectItem value="theme-4">Rose Sage</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
