@@ -89,6 +89,10 @@ export function HeroManagement({ data }: { data: iHero }) {
         mutationFn: async (payload: Schema) => {
             const fd = new FormData();
 
+            const imageFile = Array.isArray(payload.image)
+                ? payload.image[0]
+                : payload.image;
+
             fd.append("title", payload.title);
             fd.append("subtitle", payload.subtitle);
             fd.append("description", payload.description);
@@ -97,12 +101,12 @@ export function HeroManagement({ data }: { data: iHero }) {
             fd.append("themeType", payload.themeType ?? "");
 
             // kirim file hanya jika user upload baru
-            if (payload.image instanceof File) {
-                fd.append("image", payload.image);
+            if (imageFile instanceof File) {
+                fd.append("image", imageFile);
             }
 
             // jika user menghapus existing image → kirim flag
-            if (!payload.image) {
+            if (!imageFile) {
                 fd.append("removeImage", "true");
             }
 
@@ -243,6 +247,7 @@ export function HeroManagement({ data }: { data: iHero }) {
                                 maxSize={2100000}
                                 setValue={form.setValue as any}
                                 defaultUrl={data?.image ?? ""}
+                                placeholder="JPG atau PNG hingga 2MB. Drag & drop atau klik untuk pilih."
                             />
 
                             <FieldError errors={[fieldState.error]} />
@@ -252,7 +257,7 @@ export function HeroManagement({ data }: { data: iHero }) {
 
                 {/* Submit */}
                 <div className="flex justify-end pt-3">
-                    <Button size="sm" className="rounded-lg">
+                    <Button size="sm" className="rounded-lg" disabled={mutation.isPending}>
                         {mutation.isPending ? "Saving..." : "Save"}
                     </Button>
                 </div>

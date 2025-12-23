@@ -71,11 +71,14 @@ export function FileUpload({
       // user upload file, jadi preview existing dihapus
       setInitialPreview(null);
 
-      setValue(
-        name,
-        files.map((file) => file.file),
-        { shouldValidate: true, shouldDirty: true, shouldTouch: true }
-      );
+      // For single upload we only store the first file in form state so RHF receives a File, not an array.
+      const payload = maxFiles > 1 ? files.map((file) => file.file) : files[0]?.file ?? null;
+
+      setValue(name, payload, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
     },
 
   });
@@ -162,7 +165,8 @@ export function FileUpload({
               className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
               onClick={() => {
                 setInitialPreview(null);
-                setValue(name, [], { shouldValidate: true, shouldDirty: true });
+                // Mark as removed so backend can drop existing image
+                setValue(name, null, { shouldValidate: true, shouldDirty: true });
               }}
             >
               <XIcon className="size-4" />
